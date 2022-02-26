@@ -13,10 +13,15 @@ proc_hang:
   b proc_hang
 
 master: 
-  adr x0, _bss_begin
-  adr x1, _bss_end
+  adr x0, __bss_begin
+  adr x1, __bss_end
   sub x1 , x1 , x0 // x1 = end - begin = length
-  bl memzero 
+
+memzero:
+	str xzr, [x0], #8
+	subs x1, x1, #8
+	b.gt memzero
+  
   mov sp , 0x80000
   bl kernel_main
 
