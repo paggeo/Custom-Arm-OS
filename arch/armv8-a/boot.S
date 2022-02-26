@@ -13,17 +13,18 @@ proc_hang:
   b proc_hang
 
 master: 
-  adr x0, __bss_begin
-  adr x1, __bss_end
-  sub x1 , x1 , x0 // x1 = end - begin = length
+	mov sp, #0x80000		// Setup the stack (64 bit).
 
-memzero:
-	str xzr, [x0], #8
-	subs x1, x1, #8
-	b.gt memzero
-  
-  mov sp , 0x80000
-  bl kernel_main
+	ldr x5, =__bss_start		// Clear out BSS.
+	ldr w6, =__bss_size
+clear_bss:
+	cbz w6, kernel_entry
+	str xzr, [x5], #8
+	sub w6, w6, #1
+	cbnz w6, clear_bss
 
-  // failure detection, shouldn't reach here
-  b proc_hang 
+kernel_entry:
+	bl kernel_main			// Call kernel_main (C Code).
+					// Should not return from here.
+
+	b proc_hang			// For failsafe, halt this core too.
