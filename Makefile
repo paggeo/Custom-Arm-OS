@@ -1,6 +1,7 @@
 # Set Compiler flags
 SFLAGS = -mcpu=$(CPU) -fpic -ffreestanding -nostdlib -nostartfiles $(DIRECTIVES)
 CFLAGS = -O2 -Wall -Wextra -g
+CFLAGS += -Wno-int-to-pointer-cast -Wno-unused-parameter -Wno-pointer-to-int-cast
 LDFLAGS = -ffreestanding -O2 -nostdlib
 
 # Set Cross-Compiler Toolchain
@@ -47,18 +48,18 @@ $(BUILD_DIR)/%_c.o: $(KER_SRC)/%.c
 	$(ARMGNU)-gcc $(SFLAGS) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 ## Compile every C file in /src/common
-# $(BUILD_DIR)/%_c.o: $(COMMON_SRC)/%.c
-# 	mkdir -p $(@D)
-# 	$(ARMGNU)-gcc $(SFLAGS) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+$(BUILD_DIR)/%_c.o: $(COMMON_SRC)/%.c
+	mkdir -p $(@D)
+	$(ARMGNU)-gcc $(SFLAGS) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 ## Find all object files (from corresponding C, asm files)
 ASM_FILES = $(wildcard $(ARCH_DIR)/*.S)
 KER_C_FILES = $(wildcard $(KER_SRC)/*.c)
-# COMMON_C_FILES = $(wildcard $(COMMON_SRC)/*.c)
+COMMON_C_FILES = $(wildcard $(COMMON_SRC)/*.c)
 
 OBJ_FILES = $(ASM_FILES:$(ARCH_DIR)/%.S=$(BUILD_DIR)/%_s.o)
 OBJ_FILES += $(KER_C_FILES:$(KER_SRC)/%.c=$(BUILD_DIR)/%_c.o)
-# OBJ_FILES += $(COMMON_C_FILES:$(COMMON_SRC)/%.c=$(BUILD_DIR)/%_c.o)
+OBJ_FILES += $(COMMON_C_FILES:$(COMMON_SRC)/%.c=$(BUILD_DIR)/%_c.o)
 
 ## Link all object files and create final image
 build: $(OBJ_FILES)
@@ -66,7 +67,7 @@ build: $(OBJ_FILES)
 	@echo "----- Building for $(value AARCH) -----"
 
 	$(ARMGNU)-gcc -T $(ARCH_DIR)/linker.ld -o $(IMG_NAME).elf $(LDFLAGS) $^
-	# $(ARMGNU)-objcopy -O binary $(IMG_NAME).elf $(IMG_NAME).img
+	$(ARMGNU)-objcopy -O binary $(IMG_NAME).elf $(IMG_NAME).img
 
 # Release project
 ## Create compressed binaries for version releasing
