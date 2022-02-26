@@ -1,6 +1,6 @@
 .section ".text.boot"
 
-.glob _start 
+.global _start 
 
 _start:
     /* Start only one core*/
@@ -15,10 +15,10 @@ proc_hang:
 master: 
   adr x0, _bss_begin
   adr x1, _bss_end
-  sub x1 , x1 , x0 # x1 = end - begin = length
+  sub x1 , x1 , x0 // x1 = end - begin = length
   bl memzero 
-  mov sp , #LOW_MEMORY
+  mov sp , 0x80000
   bl kernel_main
 
-  # failure detection, shouldn't reach here
+  // failure detection, shouldn't reach here
   b proc_hang 
