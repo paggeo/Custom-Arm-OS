@@ -3,6 +3,8 @@
  
 #include <kernel/uart.h>
 #include <kernel/mmio.h>
+#include <kernel/printf.h>
+
 
  
 #if defined(__cplusplus)
@@ -29,6 +31,10 @@ void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
   }
   uart_puts(values);
   /* printf("hello\n"); */
+
+
+  init_printf(0, putc);
+  printf("Integer: %d, Char: %c, \nString : %s, Hex: 0x%X \n", 2, 'a',"nice",10);
 	while (1)
 		uart_putc(uart_getc());
 } 
