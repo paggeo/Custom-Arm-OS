@@ -13,16 +13,21 @@ proc_hang:
   b proc_hang
 
 master: 
-	mov sp, #0x80000		// Setup the stack (64 bit).
+	
 
-	ldr x5, =__bss_start		// Clear out BSS.
-	ldr w6, =__bss_size
+	adr x5, bss_begin		// Clear out BSS.
+	adr x6, bss_end
+	sub x6,x6,x5
+
 clear_bss:
-	cbz w6, kernel_entry
-	str xzr, [x5], #8
-	sub w6, w6, #1
-	cbnz w6, clear_bss
+	// cbz x6, kernel_entry 
 
+	str xzr, [x5], #8
+	subs x6, x6, #1
+	b.gt clear_bss
+
+
+mov sp, #0x400000	// Setup the stack (64 bit).
 kernel_entry:
 	bl kernel_main			// Call kernel_main (C Code).
 					// Should not return from here.
