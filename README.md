@@ -3,7 +3,7 @@
 
 ## Scheduling 
 
-###Task (struct)
+### Task (struct)
 - state of task
 - counter
 - priority
