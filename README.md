@@ -22,7 +22,7 @@
   - Tail : the last , if someone comes goes here. 
 
 
-## Priorities 
+### Priorities 
   - High Priority   (non-preemptive scheduling: stop everything and run this)
   - Middle Priotity (preemptive scheduling: when a process is finished)
   - Low Priotity    (preemptive)
