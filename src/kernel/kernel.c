@@ -3,7 +3,10 @@
  
 #include <kernel/uart.h>
 #include <kernel/mmio.h>
-#include <kernel/printf.h>
+#include <kernel/console.h>
+
+#include <clib/printf.h>
+#include <clib/string.h>
 
 
  
@@ -30,11 +33,14 @@ void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
     uart_putc(values[i]);
   }
   uart_puts(values);
-  /* printf("hello\n"); */
 
 
   init_printf(0, putc);
   printf("Integer: %d, Char: %c, \nString : %s, Hex: 0x%X \n", 2, 'a',"nice",10);
+  char device[DEVICE_LENGTH];
+  strcpy(device, "pi-3");
+	printf("\n\tBoard: Raspberry Pi 3\n");
+
 	while (1)
-		uart_putc(uart_getc());
+		console(device);
 } 

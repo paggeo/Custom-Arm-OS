@@ -2,6 +2,7 @@
 SFLAGS = -mcpu=$(CPU) -fpic -ffreestanding -nostdlib -nostartfiles $(DIRECTIVES)
 CFLAGS = -O2 -Wall -Wextra -g
 CFLAGS += -Wno-int-to-pointer-cast -Wno-unused-parameter -Wno-pointer-to-int-cast
+CFLAGS +=-Wno-unused-variable
 LDFLAGS = -ffreestanding -O2 -nostdlib
 
 # Set Cross-Compiler Toolchain
@@ -28,7 +29,7 @@ SRC_DIR = src
 INC_DIR = include
 
 KER_SRC = src/kernel
-COMMON_SRC = src/common
+CLIB_SRC = src/clib
 
 KERNEL_VERSION = 0.1.0
 
@@ -47,19 +48,19 @@ $(BUILD_DIR)/%_c.o: $(KER_SRC)/%.c
 	mkdir -p $(@D)
 	$(ARMGNU)-gcc $(SFLAGS) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-## Compile every C file in /src/common
-$(BUILD_DIR)/%_c.o: $(COMMON_SRC)/%.c
+## Compile every C file in /src/clib
+$(BUILD_DIR)/%_c.o: $(CLIB_SRC)/%.c
 	mkdir -p $(@D)
 	$(ARMGNU)-gcc $(SFLAGS) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 ## Find all object files (from corresponding C, asm files)
 ASM_FILES = $(wildcard $(ARCH_DIR)/*.S)
 KER_C_FILES = $(wildcard $(KER_SRC)/*.c)
-COMMON_C_FILES = $(wildcard $(COMMON_SRC)/*.c)
+CLIB_C_FILES = $(wildcard $(CLIB_SRC)/*.c)
 
 OBJ_FILES = $(ASM_FILES:$(ARCH_DIR)/%.S=$(BUILD_DIR)/%_s.o)
 OBJ_FILES += $(KER_C_FILES:$(KER_SRC)/%.c=$(BUILD_DIR)/%_c.o)
-OBJ_FILES += $(COMMON_C_FILES:$(COMMON_SRC)/%.c=$(BUILD_DIR)/%_c.o)
+OBJ_FILES += $(CLIB_C_FILES:$(CLIB_SRC)/%.c=$(BUILD_DIR)/%_c.o)
 
 ## Link all object files and create final image
 build: $(OBJ_FILES)

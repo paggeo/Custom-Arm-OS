@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */
 
-#include <kernel/printf.h>
+#include <clib/printf.h>
 
 typedef void (*putcf) (void*,char);
 static putcf stdout_putf;
