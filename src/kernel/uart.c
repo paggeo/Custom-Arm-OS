@@ -42,9 +42,6 @@ void uart_init(int raspi)
 {
 	mmio_init(raspi);
  
-	// Disable UART0.
-	mmio_write(UART0_CR, 0x00000000);
-	// Setup the GPIO pin 14 && 15.
  
 	// Disable pull up/down for all GPIO pins & delay for 150 cycles.
 	mmio_write(GPPUD, 0x00000000);
@@ -58,7 +55,7 @@ void uart_init(int raspi)
 	mmio_write(GPPUDCLK0, 0x00000000);
  
 	// Clear pending interrupts.
-	mmio_write(UART0_ICR, 0x7FF);
+	mmio_write(AUX_MU_IER_REG, 0x7FF);
  
 	// Set integer & fractional part of baud rate.
 	// Divider = UART_CLOCK/(16 * Baud)
