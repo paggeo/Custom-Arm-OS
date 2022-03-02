@@ -19,4 +19,16 @@
 #define SYSTEM_TIMER_IRQ_2	(1 << 2)
 #define SYSTEM_TIMER_IRQ_3	(1 << 3)
 
+
 #endif  /*_P_IRQ_H */
+
+#ifndef	_IRQ_H
+#define	_IRQ_H
+
+void enable_interrupt_controller( void );
+
+void irq_vector_init( void );
+void enable_irq( void );
+void disable_irq( void );
+
+#endif  /*_IRQ_H */

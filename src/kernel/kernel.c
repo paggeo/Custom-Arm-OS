@@ -9,6 +9,10 @@
 #include <clib/string.h>
 
 #include <kernel/utils.h>
+#include <arm/timer.h>
+#include <arm/irq.h>
+#include <arm/fork.h>
+#include <kernel/sched.h>
 
 
  
@@ -53,7 +57,41 @@ extern "C" /* Use C linkage for kernel_main. */
 		console(device);
 } 
 */
+void process(char *array)
+{
+	while (1){
+		for (int i = 0; i < 5; i++){
+			uart_puts(array[i]);
+			delay(100000);
+		}
+	}
+}
 
+void kernel_main(void)
+{
+	uart_init(3);
+	init_printf(0, putc);
+	irq_vector_init();
+	timer_init();
+	enable_interrupt_controller();
+	enable_irq();
+
+	int res = copy_process((unsigned long)&process, (unsigned long)"12345");
+	if (res != 0) {
+		printf("error while starting process 1");
+		return;
+	}
+	res = copy_process((unsigned long)&process, (unsigned long)"abcde");
+	if (res != 0) {
+		printf("error while starting process 2");
+		return;
+	}
+
+	while (1){
+		schedule();
+	}	
+}
+/*
 void kernel_main(void)
 {
 	uart_init(3);
@@ -66,4 +104,4 @@ void kernel_main(void)
 	while (1){
 		uart_puts(uart_gets());
 	}	
-}
+}*/
