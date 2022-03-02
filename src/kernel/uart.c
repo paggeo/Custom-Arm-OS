@@ -42,6 +42,15 @@ void uart_init(int raspi)
 {
 	mmio_init(raspi);
  
+	// selecting PINs 14,15 alternate mode as TXD1 and RXD1 respectivelly
+	unsigned int selector;
+
+	selector = mmio_read(GPFSEL1);
+	selector &= ~(7<<12);                   // clean gpio14
+	selector |= 2<<12;                      // set alt5 for gpio14
+	selector &= ~(7<<15);                   // clean gpio15
+	selector |= 2<<15;                      // set alt5 for gpio15
+	mmio_write(GPFSEL1,selector);
  
 	// Disable pull up/down for all GPIO pins & delay for 150 cycles.
 	mmio_write(GPPUD, 0x00000000);
@@ -54,40 +63,15 @@ void uart_init(int raspi)
 	// Write 0 to GPPUDCLK0 to make it take effect.
 	mmio_write(GPPUDCLK0, 0x00000000);
  
-	// Clear pending interrupts.
-	mmio_write(AUX_MU_IER_REG, 0x7FF);
+	mmio_write(AUX_ENABLES,1);                   //Enable mini uart (this also enables access to its registers)
+	mmio_write(AUX_MU_CNTL_REG,0);               //Disable auto flow control and disable receiver and transmitter (for now)
+	mmio_write(AUX_MU_IER_REG,0);                //Disable receive and transmit interrupts
+	mmio_write(AUX_MU_LCR_REG,3);                //Enable 8 bit mode
+	mmio_write(AUX_MU_MCR_REG,0);                //Set RTS line to be always high
+	mmio_write(AUX_MU_BAUD_REG,270);             //Set baud rate to 115200
+	mmio_write(AUX_MU_CNTL_REG,3);               //Finally, enable transmitter and receiver
  
-	// Set integer & fractional part of baud rate.
-	// Divider = UART_CLOCK/(16 * Baud)
-	// Fraction part register = (Fractional part * 64) + 0.5
-	// Baud = 115200.
- 
-	// For Raspi3 and 4 the UART_CLOCK is system-clock dependent by default.
-	// Set it to 3Mhz so that we can consistently set the baud rate
-	if (raspi >= 3) {
-		// UART_CLOCK = 30000000;
-		unsigned int r = (((unsigned int)(&mbox) & ~0xF) | 8);
-		// wait until we can talk to the VC
-		while ( mmio_read(MBOX_STATUS) & 0x80000000 ) { }
-		// send our message to property channel and wait for the response
-		mmio_write(MBOX_WRITE, r);
-		while ( (mmio_read(MBOX_STATUS) & 0x40000000) || mmio_read(MBOX_READ) != r ) { }
-	}
- 
-	// Divider = 3000000 / (16 * 115200) = 1.627 = ~1.
-	mmio_write(UART0_IBRD, 1);
-	// Fractional part register = (.627 * 64) + 0.5 = 40.6 = ~40.
-	mmio_write(UART0_FBRD, 40);
- 
-	// Enable FIFO & 8 bit data transmission (1 stop bit, no parity).
-	mmio_write(UART0_LCRH, (1 << 4) | (1 << 5) | (1 << 6));
- 
-	// Mask all interrupts.
-	mmio_write(UART0_IMSC, (1 << 1) | (1 << 4) | (1 << 5) | (1 << 6) |
-	                      (1 << 7) | (1 << 8) | (1 << 9) | (1 << 10));
- 
-	// Enable UART0, receive & transfer part of UART.
-	mmio_write(UART0_CR, (1 << 0) | (1 << 8) | (1 << 9));
+
 }
  
 void uart_putc(unsigned char c)
