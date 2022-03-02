@@ -19,35 +19,22 @@ enum
     UART0_BASE = (GPIO_BASE + 0x1000), // for raspi4 0xFE201000, raspi2 & 3 0x3F201000, and 0x20201000 for raspi1
  
     // The offsets for reach register for the UART.
-    UART0_DR     = (UART0_BASE + 0x00),
-    UART0_RSRECR = (UART0_BASE + 0x04),
-    UART0_FR     = (UART0_BASE + 0x18),
-    UART0_ILPR   = (UART0_BASE + 0x20),
-    UART0_IBRD   = (UART0_BASE + 0x24),
-    UART0_FBRD   = (UART0_BASE + 0x28),
-    UART0_LCRH   = (UART0_BASE + 0x2C),
-    UART0_CR     = (UART0_BASE + 0x30),
-    UART0_IFLS   = (UART0_BASE + 0x34),
-    UART0_IMSC   = (UART0_BASE + 0x38),
-    UART0_RIS    = (UART0_BASE + 0x3C),
-    UART0_MIS    = (UART0_BASE + 0x40),
-    UART0_ICR    = (UART0_BASE + 0x44),
-    UART0_DMACR  = (UART0_BASE + 0x48),
-    UART0_ITCR   = (UART0_BASE + 0x80),
-    UART0_ITIP   = (UART0_BASE + 0x84),
-    UART0_ITOP   = (UART0_BASE + 0x88),
-    UART0_TDR    = (UART0_BASE + 0x8C),
+	
+	
+	
+	AUX_ENABLES     (PBASE+0x00215004)
+	AUX_MU_IO_REG   (PBASE+0x00215040)
+	AUX_MU_IER_REG  (PBASE+0x00215044)
+	AUX_MU_IIR_REG  (PBASE+0x00215048)
+	AUX_MU_LCR_REG  (PBASE+0x0021504C)
+	AUX_MU_MCR_REG  (PBASE+0x00215050)
+	AUX_MU_LSR_REG  (PBASE+0x00215054)
+	AUX_MU_MSR_REG  (PBASE+0x00215058)
+	AUX_MU_SCRATCH  (PBASE+0x0021505C)
+	AUX_MU_CNTL_REG (PBASE+0x00215060)
+	AUX_MU_STAT_REG (PBASE+0x00215064)
+	AUX_MU_BAUD_REG (PBASE+0x00215068)
  
-    // The offsets for Mailbox registers
-    MBOX_BASE    = 0xB880,
-    MBOX_READ    = (MBOX_BASE + 0x00),
-    MBOX_STATUS  = (MBOX_BASE + 0x18),
-    MBOX_WRITE   = (MBOX_BASE + 0x20)
-};
-
-// A Mailbox message with set clock rate of PL011 to 3MHz tag
-volatile unsigned int  __attribute__((aligned(16))) mbox[9] = {
-    9*4, 0, 0x38002, 12, 8, 2, 3000000, 0 ,0
 };
 
 void uart_init(int raspi)
