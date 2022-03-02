@@ -14,7 +14,7 @@ enum
  
     // Controls actuation of pull up/down for specific GPIO pin.
     GPPUDCLK0 = (GPIO_BASE + 0x98),
-    
+    // Controls alternative functions for pins 10-19
     GPFSEL1 = (GPIO_BASE + 0x04),        
     // The base address for UART.
     UART1_BASE = (GPIO_BASE + 0x10000), // for raspi4 0xFE210000, raspi2 & 3 0x3F210000, and 0x20210000 for raspi1
