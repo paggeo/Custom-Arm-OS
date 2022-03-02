@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
- 
+
 #include <kernel/uart.h>
 #include <kernel/mmio.h>
 #include <kernel/console.h>
@@ -8,18 +8,20 @@
 #include <clib/printf.h>
 #include <clib/string.h>
 
+#include <kernel/utils.h>
+
 
  
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
 #endif
  
-void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
+/*void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
 {
 	// initialize UART for Raspi2
 	uart_init(3);
 	uart_puts("Hello, kernel World!\r\n");
- 
+  init_printf(0, putc);
   char values[5];
   values[0] = 'N';
   values[1] = 'i';
@@ -34,8 +36,14 @@ void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
   }
   uart_puts(values);
 
+  int el = get_el();
+	printf("Exception level: %d \r\n", el);
 
-  init_printf(0, putc);
+  irq_vector_init();
+	timer_init();
+	enable_interrupt_controller();
+	enable_irq();
+  
   printf("Integer: %d, Char: %c, \nString : %s, Hex: 0x%X \n", 2, 'a',"nice",10);
   char device[DEVICE_LENGTH];
   strcpy(device, "pi-3");
@@ -44,3 +52,18 @@ void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
 	while (1)
 		console(device);
 } 
+*/
+
+void kernel_main(void)
+{
+	uart_init(3);
+	init_printf(0, putc);
+	irq_vector_init();
+	timer_init();
+	enable_interrupt_controller();
+	enable_irq();
+
+	while (1){
+		uart_puts(uart_gets());
+	}	
+}
