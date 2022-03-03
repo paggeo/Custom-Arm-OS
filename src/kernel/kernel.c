@@ -45,8 +45,7 @@ void kernel_main(void)
 
 	int i;
 	
-	
-	printf("hello_darkness\n");
+
 	while (1) {
 		uart_send(uart_recv());
 	}
