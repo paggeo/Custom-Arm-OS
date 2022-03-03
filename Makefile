@@ -28,7 +28,7 @@ SRC_DIR = src
 INC_DIR = include
 
 KER_SRC = src/kernel
-COMMON_SRC = src/common
+COMMON_SRC = src/clib
 
 KERNEL_VERSION = 0.1.0
 

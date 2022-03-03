@@ -27,4 +27,3 @@ clear_bss:
 	bl	kernel_main
 	b 	proc_hang		// should never come here
 
-
