@@ -44,7 +44,8 @@ void kernel_main(void)
 
 
 	int i;
-	
+	init_printf(0, putc);
+  printf("Nice\n\0");
 
 	while (1) {
 		uart_send(uart_recv());
