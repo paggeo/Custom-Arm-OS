@@ -1,30 +1,30 @@
 .section ".text.boot"
 
-.globl _start
+.global _start 
+
 _start:
-	mrs	x0, mpidr_el1		
-	and	x0, x0,#0xFF		// Check processor id
-	cbz	x0, master		// Hang for all non-primary CPU
-	b	proc_hang
+    /* Start only one core*/
+    mrs x0, mpidr_el1
+    and x0, x0 , #0xFF
+    cbz x0, master 
+    b proc_hang
 
-proc_hang: 
-	b 	proc_hang
+proc_hang:
+  b proc_hang
 
-master:
-	adr	x0, bss_begin
-	adr	x1, bss_end
-	sub	x1, x1, x0
+master: 
+	mov sp, #0x80000		// Setup the stack (64 bit).
 
-
-
+	ldr x5, =__bss_start		// Clear out BSS.
+	ldr w6, =__bss_size
 clear_bss:
+	cbz w6, kernel_entry
+	str xzr, [x5], #8
+	sub w6, w6, #1
+	cbnz w6, clear_bss
 
-	str xzr, [x0], #8
-	subs x1, x1, #1
-	b.gt clear_bss
+kernel_entry:
+	bl kernel_main			// Call kernel_main (C Code).
+					// Should not return from here.
 
-	mov	sp, #0x80000
-	bl	kernel_main
-	b 	proc_hang		// should never come here
-
-
+	b proc_hang			// For failsafe, halt this core too.

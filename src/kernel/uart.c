@@ -40,7 +40,7 @@ enum
 void uart_putc (unsigned char c )
 {
 	while(1) {
-		if(mmio_read(AUX_MU_LSR_REG)&0x20) 
+		if(mmio_read(AUX_MU_LSR_REG)&(1<<5)) 
 			break;
 	}
 	mmio_write(AUX_MU_IO_REG,c);
@@ -49,10 +49,10 @@ void uart_putc (unsigned char c )
 unsigned char uart_getc (  )
 {
 	while(1) {
-		if(mmio_read(AUX_MU_LSR_REG)&0x01) 
+		if(mmio_read(AUX_MU_LSR_REG)&1) 
 			break;
 	}
-	return(mmio_read(AUX_MU_IO_REG)&0xFF);
+	return(mmio_read(AUX_MU_IO_REG)&0xFF); //doing bitwise and , because char is 1 byte
 }
 
 void uart_puts(const char* str)
