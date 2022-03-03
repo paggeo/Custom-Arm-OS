@@ -69,6 +69,10 @@ void uart_init(int raspi)
 	mmio_write(AUX_MU_LCR_REG,3);                //Enable 8 bit mode
 	mmio_write(AUX_MU_MCR_REG,0);                //Set RTS line to be always high
 	mmio_write(AUX_MU_BAUD_REG,270);             //Set baud rate to 115200
+	// baudrate is calculated as:
+	// baudrate = system_clock_freq / (8 * ( baudrate_reg + 1 )) 
+	// and for a clock freq of 250 MHz, baudrate register is calculated at 270.
+	
 	mmio_write(AUX_MU_CNTL_REG,3);               //Finally, enable transmitter and receiver
  
 
@@ -77,15 +81,15 @@ void uart_init(int raspi)
 void uart_putc(unsigned char c)
 {
 	// Wait for UART to become ready to transmit.
-	while ( mmio_read(UART0_FR) & (1 << 5) ) { }
-	mmio_write(UART0_DR, c);
+	while ( mmio_read(AUX_MU_LSR_REG) & (1 << 5) ) { }
+	mmio_write(AUX_MU_IO_REG, c);
 }
  
 unsigned char uart_getc()
 {
     // Wait for UART to have received something.
-    while ( mmio_read(UART0_FR) & (1 << 4) ) { }
-    return mmio_read(UART0_DR);
+    while ( mmio_read(AUX_MU_LSR_REG) & (1) ) { }
+    return mmio_read(AUX_MU_IO_REG);
 }
  
 void uart_puts(const char* str)
