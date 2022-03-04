@@ -1,4 +1,4 @@
-/**
+/*
  * \ingroup string
  * Implementation of a small subset of string.h.
  * @{
