@@ -23,6 +23,9 @@ void user_process(){
 	char buf[30] = {0};
 	tfp_sprintf(buf, "User process started\n\r");
 	call_sys_write(buf);
+	call_sys_cat(1);
+	call_sys_cat(2);
+	call_sys_cat(3);
 	unsigned long stack = call_sys_malloc();
 	if (stack < 0) {
 		printf("Error while allocating stack for process 1\n\r");
