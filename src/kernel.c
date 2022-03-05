@@ -10,6 +10,12 @@
 void user_process1(char *array)
 {
 	char buf[2] = {0};
+	long priority =1;
+	while (1){
+		if(array[0] == '1') {
+			call_sys_change_prior(++priority);
+		}
+	}
 	while (1){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
