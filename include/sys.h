@@ -7,7 +7,7 @@
 #define SYS_MALLOC_NUMBER   1 	
 #define SYS_CLONE_NUMBER    2 	
 #define SYS_EXIT_NUMBER     3 	
-#define SYS_CAT_NUMBER     3 	
+#define SYS_CAT_NUMBER      4	
 
 #ifndef __ASSEMBLER__
 
