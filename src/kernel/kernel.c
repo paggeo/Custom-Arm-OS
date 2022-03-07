@@ -2,6 +2,8 @@
 #include "mini_uart.h"
 #include <clib/printk.h>
 #include "utils.h"
+#include "irq.h"
+#include "timer.h"
 
 void kernel_main(void)
 {
@@ -16,6 +18,10 @@ void kernel_main(void)
 
   int el = get_el();
 	printk("Exception level: %d \r\n", el);
+  irq_vector_init();
+	timer_init();
+	enable_interrupt_controller();
+	enable_irq();
 	/* init_printf(0, putc); */
   /* printf("Nice\r\n\0"); */
 
