@@ -5,7 +5,7 @@
 #include "mm.h"
 
 void sys_write(char * buf){
-	printk("%s\n",buf);
+	printk("%s",buf);
 }
 
 int sys_clone(unsigned long stack){

@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <clib/printk.h>
+#include "clib/printk.h"
 #include "timer.h"
 #include "entry.h"
 #include "peripherals/irq.h"
@@ -23,7 +23,10 @@ const char *entry_error_messages[] = {
 	"SYNC_INVALID_EL0_32",		
 	"IRQ_INVALID_EL0_32",		
 	"FIQ_INVALID_EL0_32",		
-	"ERROR_INVALID_EL0_32"	
+	"ERROR_INVALID_EL0_32",
+
+	"SYNC_ERROR",
+	"SYSCALL_ERROR"
 };
 
 void enable_interrupt_controller()
@@ -33,19 +36,17 @@ void enable_interrupt_controller()
 
 void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
 {
-	printk("%s, ESR: %d, address: %d\r\n", entry_error_messages[type], esr, address);
+	printk("%s, ESR: %x, address: %x\r\n", entry_error_messages[type], esr, address);
 }
 
 void handle_irq(void)
 {
 	unsigned int irq = get32(IRQ_PENDING_1);
-	while (irq) {
-		if (SYSTEM_TIMER_IRQ_1 & irq){
-			irq &= ~SYSTEM_TIMER_IRQ_1;
+	switch (irq) {
+		case (SYSTEM_TIMER_IRQ_1):
 			handle_timer_irq();
-		}
-		else{
-			printk("Unknown pending irq: %x\r\n", irq);
-		}
+			break;
+		default:
+			printk("Inknown pending irq: %x\r\n", irq);
 	}
 }

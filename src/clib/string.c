@@ -23,7 +23,7 @@ void *memset(void *s, int c, size_t n)
 	return s;
 }
 
-void *memcpy(void *dest, const void *src, size_t n)
+void *memcpy1(void *dest, const void *src, size_t n)
 {
 	/* Typecast src and dest addresses to correct data types */
 	char *d = (char *) dest;

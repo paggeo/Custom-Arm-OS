@@ -1,53 +1,72 @@
-#include <clib/printf.h>
-#include "mini_uart.h"
-#include <clib/printk.h>
+#include "clib/printk.h"
 #include "utils.h"
-#include "irq.h"
 #include "timer.h"
-#include "fork.h"
+#include "irq.h"
 #include "sched.h"
+#include "fork.h"
+#include "mini_uart.h"
+#include "sys.h"
 
-void process(char *array)
+void user_process1(char *array)
 {
+	char buf[2] = {0};
 	while (1){
 		for (int i = 0; i < 5; i++){
-			uart_send(array[i]);
-			delay(1000000);
+			buf[0] = array[i];
+			call_sys_write(buf);
+			delay(10000000);
 		}
 	}
+}
+
+void user_process(){
+	
+  /* char buf[30] = {'U','S','E','R','\40','P','R','O','C','E','S','S','\40','S','T','A','R','T','E','D','\r','\n'}; */
+	
+	/* call_sys_write(buf); */
+	unsigned long stack = call_sys_malloc();
+	if (stack < 0) {
+		printk("Error while allocating stack for process 1\n\r");
+		return;
+	}
+	int err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"12345", stack);
+	if (err < 0){
+		printk("Error while clonning process 1\n\r");
+		return;
+	} 
+	stack = call_sys_malloc();
+	if (stack < 0) {
+		printk("Error while allocating stack for process 1\n\r");
+		return;
+	}
+	err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"abcd", stack);
+	if (err < 0){
+		printk("Error while clonning process 2\n\r");
+		return;
+	} 
+	call_sys_exit();
+}
+
+void kernel_process(){
+	printk("Kernel process started. EL %d\r\n", get_el());
+	int err = move_to_user_mode((unsigned long)&user_process);
+	if (err < 0){
+		printk("Error while moving process to user mode\n\r");
+	} 
 }
 
 
 void kernel_main(void)
 {
-	
-
-  
-
-
 	uart_init();
-	//init_printf(0, putc);
-	printk("\narmOS initializing...\n");
-  	printk("Integer = %d\n",5);
-  	printk("Character = %c\n",'t');
-  	printk("String = %s\n" , "nice");
-  	printk("Hex = %x\n" , 12);
-
 	irq_vector_init();
 	timer_init();
 	enable_interrupt_controller();
 	enable_irq();
-	printk("before first copy\r\n");
-	int res = copy_process((unsigned long)&process, (unsigned long)"12345");
-	printk("i havee copied n1\r\n");
-	if (res != 0) {
-		printf("error while starting process 1");
-		return;
-	}
-	res = copy_process((unsigned long)&process, (unsigned long)"abcde");
-	printk("i have copied n2\r\n");
-	if (res != 0) {
-		printf("error while starting process 2");
+
+	int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0);
+	if (res < 0) {
+		printk("error while starting kernel process");
 		return;
 	}
 
@@ -55,4 +74,3 @@ void kernel_main(void)
 		schedule();
 	}	
 }
-
