@@ -40,7 +40,7 @@ struct task_struct {
 	long counter;
 	long priority;
 	long preempt_count;
-    long first_time;
+    //long first_time;
 };
 
 extern void sched_init(void);
@@ -50,7 +50,7 @@ extern void preempt_disable(void);
 extern void preempt_enable(void);
 extern void switch_to(struct task_struct* next);
 extern void cpu_switch_to(struct task_struct* prev, struct task_struct* next);
-extern void ret_from_fork(void);
+
 
 #define INIT_TASK \
 /*cpu_context*/	{ {0,0,0,0,0,0,0,0,0,0,0,0,0}, \

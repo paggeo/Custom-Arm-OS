@@ -142,6 +142,20 @@ el1_irq:
 	bl	handle_irq
 	kernel_exit 
 
+.globl ret_from_fork
+ret_from_fork:
+	/* A call to preempt_enable(), in order for the task to be rescheduled */
+	bl schedule_tail
+	/*
+	 * Calls the process function stored in x19,
+	 * with the argument stored in x20.
+	 * (Registers convent!ion set by fork.c)
+	 */
+
+	 //edo troei interrupt!!!!!!!!!
+	 //!!!!!!
+	mov x0, x20
+	blr x19 	/* Should never return */
 
 
 .globl err_hang
