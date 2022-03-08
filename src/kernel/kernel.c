@@ -12,7 +12,7 @@ void process(char *array)
 	while (1){
 		for (int i = 0; i < 5; i++){
 			uart_send(array[i]);
-			delay(100000);
+			delay(1000000);
 		}
 	}
 }
@@ -28,10 +28,10 @@ void kernel_main(void)
 	uart_init();
 	//init_printf(0, putc);
 	printk("\narmOS initializing...\n");
-  printk("Integer = %d\n",5);
-  printk("Character = %c\n",'t');
-  printk("String = %s\n" , "nice");
-  printk("Hex = %x\n" , 12);
+  	printk("Integer = %d\n",5);
+  	printk("Character = %c\n",'t');
+  	printk("String = %s\n" , "nice");
+  	printk("Hex = %x\n" , 12);
 
 	irq_vector_init();
 	timer_init();
