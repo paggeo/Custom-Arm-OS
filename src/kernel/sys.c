@@ -23,5 +23,48 @@ unsigned long sys_malloc(){
 void sys_exit(){
 	exit_process();
 }
+void sys_cat(unsigned int num){
+	if(num ==1 ){
+    printk("             *     ,MMM8&&&.            *\n"); 
+    printk("                  MMMM88&&&&&    .\n");  
+    printk("                 MMMM88&&&&&&&\n");  
+    printk("     *           MMM88&&&&&&&&\n");  
+    printk("                 MMM88&&&&&&&&\n");  
+    printk("                 'MMM88&&&&&&'\n");  
+    printk("                   'MMM8&&&'      *    _\n");  
+    printk("          ||___||                      \\n"); 
+    printk("         =) ^Y^ (=   ||_||              ||    '\n");  
+    printk("          |  ^  |    )a a '._.-""""-.  //\n");  
+    printk("           )=*=(    =|T_= /    ~  ~  |//\n");  
+    printk("          /     |     ``|   ~   / ~  /\n");  
+    printk("          |     |         |~   | |  ~/\n");  
+    printk("         /| | | ||         |  ~/- | ~\\n"); 
+    printk("         || | |_|/|        || |  // /`\n"); 
+    printk("  jgs_/|_//_// __//|_/|_/|_((_||((_//|_/|_/|_\n");  
+    printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");  
+    printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");  
+    printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");     
+    printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");  
+    printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");  
+    }
+    else if (num ==2) {
+        printk("                                 _\n"); 
+        printk("                                | \n"); 
+        printk("                                | |\n"); 
+        printk("                                | |\n"); 
+        printk("           ||                  | |\n"); 
+        printk("          /, ~|                / /\n"); 
+        printk("         X     `-.....-------./ /\n"); 
+        printk("          ~-. ~  ~              |\n"); 
+        printk("             |             /    |\n"); 
+        printk("              |  /_     ___|   /\n"); 
+        printk("              | /| ~~~~~   |  |\n"); 
+        printk("              | | |        || |\n"); 
+        printk("              | || |       || )\n"); 
+        printk("             (_/ (_/      ((_/\n"); 
 
-void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit};
+    }
+    else {printk("Wrong number of cat, try 1 or 2");}
+}
+
+void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit, sys_cat};

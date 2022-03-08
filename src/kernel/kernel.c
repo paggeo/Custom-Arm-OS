@@ -9,6 +9,9 @@
 
 void user_process1(char *array)
 {
+  call_sys_cat((unsigned int) 0);
+  call_sys_cat((unsigned int) 1);
+  call_sys_cat((unsigned int) 2);
 	char buf[2] = {0};
 	while (1){
 		for (int i = 0; i < 5; i++){
@@ -63,6 +66,7 @@ void kernel_main(void)
 	timer_init();
 	enable_interrupt_controller();
 	enable_irq();
+  
 
 	int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0);
 	if (res < 0) {
