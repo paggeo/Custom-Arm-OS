@@ -39,11 +39,13 @@ void show_invalid_entry_message(int type, unsigned long esr, unsigned long addre
 void handle_irq(void)
 {
 	unsigned int irq = get32(IRQ_PENDING_1);
-	switch (irq) {
-		case (SYSTEM_TIMER_IRQ_1):
+	while (irq) {
+		if (SYSTEM_TIMER_IRQ_1 & irq){
+			irq &= ~SYSTEM_TIMER_IRQ_1;
 			handle_timer_irq();
-			break;
-		default:
+		}
+		else{
 			printk("Unknown pending irq: %x\r\n", irq);
+		}
 	}
 }
