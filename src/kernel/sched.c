@@ -1,7 +1,9 @@
 #include "sched.h"
 #include "irq.h"
 #include "clib/printk.h"
-
+#include "fork.h"
+#include "utils.h"
+#include "mm.h"
 
 static struct task_struct init_task = INIT_TASK;
 struct task_struct *current = &(init_task);
@@ -44,18 +46,19 @@ void _schedule(void)
 			}
 		}
 	}
-	switch_to(task[next]);
+	switch_to(task[next], next);
 	preempt_enable();
 }
 
 void schedule(void)
-{  //printk("i am in schedule\r\n");
+{
 	current->counter = 0;
 	_schedule();
 }
 
-void switch_to(struct task_struct * next) 
-{	//printk("i am in switch to\r\n");
+
+void switch_to(struct task_struct * next, int index) 
+{
 	if (current == next) 
 		return;
 	struct task_struct * prev = current;
@@ -64,15 +67,11 @@ void switch_to(struct task_struct * next)
 }
 
 void schedule_tail(void) {
-	//printk("i am in tail\r\n");
 	preempt_enable();
 }
 
-
 void timer_tick()
-{	//printk("i am in timer tick \r\n");
-    if  (current->counter>2147483640) {current->counter=1;}
-	printk("%d",current->counter );
+{
 	--current->counter;
 	if (current->counter>0 || current->preempt_count >0) {
 		return;
@@ -81,4 +80,19 @@ void timer_tick()
 	enable_irq();
 	_schedule();
 	disable_irq();
+}
+
+void exit_process(){
+	preempt_disable();
+	for (int i = 0; i < NR_TASKS; i++){
+		if (task[i] == current) {
+			task[i]->state = TASK_ZOMBIE;
+			break;
+		}
+	}
+	if (current->stack) {
+		free_page(current->stack);
+	}
+	preempt_enable();
+	schedule();
 }
