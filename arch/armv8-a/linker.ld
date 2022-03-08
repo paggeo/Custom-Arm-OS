@@ -1,47 +1,11 @@
-ENTRY(_start)
-
 SECTIONS
 {
-	/* Starts at LOADER_ADDR. */
-	. = 0x80000;
-	__start = .;
-	__text_start = .;
-	.text :
-	{
-		KEEP(*(.text.boot))
-		*(.text)
-	}
-	/* align to page size */
-	. = ALIGN(4096);
-	__text_end = .;
-
-	__rodata_start = .;
-	.rodata :
-	{
-		*(.rodata)
-	}
-	/* align to page size */
-	. = ALIGN(4096);
-	__rodata_end = .;
-
-	__data_start = .;
-	.data :
-	{
-		*(.data)
-	}
-	/* align to page size */
-	. = ALIGN(4096);
-	__data_end = .;
-
+	.text.boot : { *(.text.boot) }
+	.text : { *(.text) }
+	.rodata : { *(.rodata) }
+	.data : { *(.data) }
+	. = ALIGN(0x8);
 	bss_begin = .;
-	.bss :
-	{
-		bss = .;
-		*(.bss)
-	}
-	/* align to page size */
-	. = ALIGN(4096);
+	.bss : { *(.bss*) } 
 	bss_end = .;
-	__bss_size =bss_end -bss_begin;
-	__end = .;
 }

@@ -20,37 +20,39 @@ void process(char *array)
 
 void kernel_main(void)
 {
-	uart_init();
+	
 
-	int i;
-  printk("\narmOS initializing...\n");
+  
+
+
+	uart_init();
+	//init_printf(0, putc);
+	printk("\narmOS initializing...\n");
   printk("Integer = %d\n",5);
   printk("Character = %c\n",'t');
   printk("String = %s\n" , "nice");
   printk("Hex = %x\n" , 12);
 
-  int el = get_el();
-	printk("Exception level: %d \r\n", el);
-  irq_vector_init();
+	irq_vector_init();
 	timer_init();
 	enable_interrupt_controller();
 	enable_irq();
-
+	printk("before first copy\r\n");
 	int res = copy_process((unsigned long)&process, (unsigned long)"12345");
+	printk("i havee copied n1\r\n");
 	if (res != 0) {
-		printk("error while starting process 1\r\n");
+		printf("error while starting process 1");
 		return;
 	}
 	res = copy_process((unsigned long)&process, (unsigned long)"abcde");
+	printk("i have copied n2\r\n");
 	if (res != 0) {
-		printk("error while starting process 2\r\n");
+		printf("error while starting process 2");
 		return;
 	}
-	/* init_printf(0, putc); */
-  /* printf("Nice\r\n\0"); */
 
-	while (1) {
-		uart_send(uart_recv());
-	}
+	while (1){
+		schedule();
+	}	
 }
 

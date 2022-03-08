@@ -80,10 +80,10 @@ void schedule_tail(void) {
 
 void timer_tick()
 {   printk("got here\r\n");
-    if (current->counter>2147483640){
+    /*if (current->counter>2147483640){
 	current->counter=0;}
     if (current->counter>0){
-	--current->counter;}
+	--current->counter;}*/
     printk("Before counter :%d\r\n",current->counter);
     printk("Before counter :%d\r\n",current->preempt_count);
 	if (current->counter>0 || current->preempt_count >0) {

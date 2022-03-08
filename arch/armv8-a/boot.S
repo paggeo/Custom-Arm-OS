@@ -1,5 +1,7 @@
 #include "arm/sysregs.h"
 
+#include "mm.h"
+
 .section ".text.boot"
 
 .globl _start
@@ -30,21 +32,12 @@ master:
 
 	eret				
 
-
 el1_entry:
 	adr	x0, bss_begin
 	adr	x1, bss_end
 	sub	x1, x1, x0
+	bl 	memzero
 
-
-
-clear_bss:
-
-	str xzr, [x0], #8
-	subs x1, x1, #1
-	b.gt clear_bss
-
-	mov	sp, #0x80000
+	mov	sp, #(2 * SECTION_SIZE) 
 	bl	kernel_main
 	b 	proc_hang		// should never come here
-
