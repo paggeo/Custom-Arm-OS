@@ -9,11 +9,16 @@
 
 void user_process1(char *array)
 {
-  call_sys_cat((unsigned int) 0);
-  call_sys_cat((unsigned int) 1);
-  call_sys_cat((unsigned int) 2);
+  //call_sys_cat((unsigned int) 0);
+  //call_sys_cat((unsigned int) 1);
+  //call_sys_cat((unsigned int) 2);
 	char buf[2] = {0};
-	while (1){
+
+	long priority = 3;
+	
+		if(array[0] == '1') {
+			call_sys_change_prior(priority);}
+		while (1){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
 			call_sys_write(buf);
