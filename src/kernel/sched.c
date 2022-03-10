@@ -12,12 +12,14 @@ int nr_tasks = 1;
 
 void preempt_disable(void)
 {
-	current->preempt_count++;
+	current->preempt_count=1;
+	/* current->preempt_count++; */
 }
 
 void preempt_enable(void)
 {
-	current->preempt_count--;
+	current->preempt_count=0;
+	/* current->preempt_count--; */
 }
 
 

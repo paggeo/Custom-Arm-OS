@@ -24,6 +24,12 @@ call_sys_cat:
     svc #0
     ret
 
+.globl call_sys_change_prior
+call_sys_change_prior:
+	mov w8, #SYS_PRIORITY_NUMBER	
+	svc #0
+	ret
+
 .globl call_sys_clone
 call_sys_clone:
 	/* Save args for the child.  */

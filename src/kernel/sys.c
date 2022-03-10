@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "sched.h"
 #include "mm.h"
+#include "irq.h"
 
 void sys_write(char * buf){
 	printk("%s",buf);
@@ -67,4 +68,7 @@ void sys_cat(unsigned int num){
     else {printk("Wrong number of cat, try 1 or 2");}
 }
 
-void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit, sys_cat};
+void sys_change_prior(long priority){
+    current->priority = priority;
+}
+void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit, sys_cat, sys_change_prior};

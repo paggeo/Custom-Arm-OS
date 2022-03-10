@@ -64,7 +64,7 @@ void create_processes(int proc_num)
 		strcat(proc_args[pid], itoa(pid));
 		strcat(proc_args[pid], ", ");
 
-        int res = copy_process((unsigned long)&process1, (unsigned long)"12345");
+        int res = copy_process((unsigned long)&process1, (unsigned long)"12345",0,0);
 	    
 		if (res != 0) {
 			printk("Error while starting process %d\n", pid);
