@@ -1,6 +1,9 @@
 #include "utils.h"
 #include "peripherals/mini_uart.h"
 #include "peripherals/gpio.h"
+#include "clib/string.h"
+
+#define MAX_INPUT_LENGTH 80
 
 void uart_send ( char c )
 {
@@ -26,7 +29,29 @@ void uart_send_string(char* str)
 		uart_send((char)str[i]);
 	}
 }
+char *uart_recv_string( void )
+{
+	static char str[MAX_INPUT_LENGTH + 1];
+	int i = 0;
 
+	/* Initialize input string with null terminators */
+	memset(&str, '\0', MAX_INPUT_LENGTH + 1);
+
+	/* Get up to console's maximum length chars */
+	for (i = 0; i < MAX_INPUT_LENGTH; i++) {
+		/* Get char from serial, echo back */
+		str[i] = (char) uart_recv();
+		uart_send(str[i]);
+		/* If we get a NL or CR, break */
+		if (str[i] == '\r' || str[i] == '\n') {
+			break;
+		}
+	}
+	/* Always append a null terminator at end of string */
+	str[i] = '\0';
+
+	return str;
+}
 void uart_init ( void )
 {
 	unsigned int selector;

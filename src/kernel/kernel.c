@@ -7,8 +7,8 @@
 #include "mini_uart.h"
 #include "sys.h"
 #include "process.h"
-
-
+#include "console.h"
+#include "clib/string.h"
 void kernel_main(void)
 {
 	uart_init();
@@ -27,9 +27,9 @@ void kernel_main(void)
 	irq_vector_init();
 	printk("Done\n");
 	
-  printk("Enabling IRQs...\n");
-	timer_init();
-	printk("Done\n");
+  /* printk("Enabling IRQs...\n"); */
+	/* timer_init(); */
+	/* printk("Done\n"); */
 	
   printk("Enabling IRQ controllers...\n");
 	enable_interrupt_controller();
@@ -41,13 +41,16 @@ void kernel_main(void)
 
   
 
-	int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0);
-	if (res < 0) {
-		printk("error while starting kernel process");
-		return;
-	}
+	/* int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0); */
+	/* if (res < 0) { */
+	/* 	printk("error while starting kernel process"); */
+	/* 	return; */
+	/* } */
+  char device[DEVICE_LENGTH];
+  strcpy(device, "pi-3");
 
-	while (1){
-		schedule();
-	}	
+  console(device);
+	/* while (1){ */
+	/* 	schedule(); */
+	/* } */	
 }
