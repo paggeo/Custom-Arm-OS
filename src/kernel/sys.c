@@ -22,6 +22,7 @@ unsigned long sys_malloc(){
 }
 
 void sys_exit(){
+  printk("Exit this process\n");
 	exit_process();
 }
 void sys_cat(unsigned int num){
