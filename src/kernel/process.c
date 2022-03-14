@@ -13,6 +13,12 @@
 #include "sys.h"
 
 
+void print_prior(){
+  long a = sys_get_prior();
+  if (a == HIGH_PRIORITY) printk("H");
+  else if (a == MIDDLE_PRIORITY) printk("M");
+  else if (a == LOW_PRIORITY) printk("L");
+}
 
 /* String array, for the message of each process */
 static char proc_args[NR_TASKS][10];
@@ -30,8 +36,9 @@ void low_priority_process(char *array)
 	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
+      print_prior();
 			call_sys_write(buf);
-			delay(1000000);
+			delay(500000);
 		}
     count++;
 	}
@@ -47,8 +54,9 @@ void middle_priority_process(char *array)
 	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
+      print_prior();
 			call_sys_write(buf);
-			delay(1000000);
+			delay(500000);
 		}
     count++;
 	}
@@ -65,8 +73,9 @@ void high_priority_process(char *array)
 	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
+      print_prior();
 			call_sys_write(buf);
-			delay(1000000);
+			delay(500000);
 		}
     count++;
 	}

@@ -33,8 +33,8 @@ void _schedule(void)
 		next = 0;
 		for (int i = 0; i < NR_TASKS; i++){
 			p = task[i];
-      if(p && p->state == TASK_RUNNING){
-        if (p->counter > c){
+      if(p && p->state == TASK_RUNNING && p != current){
+        if (p->counter > c || p->priority > pri){
           c = p->counter;
           pri = p->priority;
           next = i;
@@ -47,9 +47,18 @@ void _schedule(void)
 		for (int i = 0; i < NR_TASKS; i++) {
 			p = task[i];
 			if (p && p->state == TASK_RUNNING) {
-				if (p->counter >10 && p->priority == LOW_PRIORITY) p->priority = MIDDLE_PRIORITY;
-				if (p->counter >10 && p->priority == MIDDLE_PRIORITY) p->priority = HIGH_PRIORITY;
-        p->counter = (p->counter >> 1) + 10*p->priority;
+				if (p->counter >2 && p->priority == LOW_PRIORITY){
+          printk("Change from low priority to middle\n");
+          p->priority = MIDDLE_PRIORITY;
+          p->counter = 0;
+        }
+        else if (p->counter >2 && p->priority == MIDDLE_PRIORITY){
+          printk("Change from middle priority to high\n");
+          p->priority = HIGH_PRIORITY;
+          p->counter = 0;
+        }
+        else  p->counter = (p->counter >> 1) + p->priority;
+        /* p->counter = (p->counter >> 1); */ 
         
 			}
 		}
@@ -82,11 +91,14 @@ void schedule_tail(void) {
 void timer_tick()
 {
 	--current->counter;
-	if (current->counter>0 || current->preempt_count == SCHED_PRIORITY || (current->state != TASK_ZOMBIE && current->priority== HIGH_PRIORITY)) {
+  printk("Counter : %d\n",current->counter);
+	if (current->preempt_count == SCHED_PRIORITY || (current->state != TASK_ZOMBIE && current->priority== HIGH_PRIORITY)) {
+	/* if (current->counter>0 || current->preempt_count == SCHED_PRIORITY || (current->state != TASK_ZOMBIE && current->priority== HIGH_PRIORITY)) { */
 		return;
 	}
 	current->counter=0;
 	enable_irq();
+  printk("Pass to schedule\n");
 	_schedule();
 	disable_irq();
 }

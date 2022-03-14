@@ -90,7 +90,7 @@ void console_schedule(){
   while (counter<3){
 		schedule();
     counter++;
-    /* printk("counter:%d\n",counter); */
+     printk("inside console counter:%d\n",counter); 
 	}
   disable_timer_irq();
   kill_processes();
@@ -105,7 +105,7 @@ void console_cat(){
 		return;
 	}
   int counter = 0;
-  while (counter<3){
+  while (counter<100){
 		schedule();
     counter++;
 	}

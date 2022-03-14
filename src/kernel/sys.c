@@ -72,4 +72,7 @@ void sys_cat(unsigned int num){
 void sys_change_prior(long priority){
     current->priority = priority;
 }
-void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit, sys_cat, sys_change_prior};
+long sys_get_prior(long priority){
+   return current->priority;
+}
+void * const sys_call_table[] = {sys_write, sys_malloc, sys_clone, sys_exit, sys_cat, sys_change_prior, sys_get_prior};
