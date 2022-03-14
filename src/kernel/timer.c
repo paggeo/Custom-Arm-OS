@@ -18,7 +18,7 @@ void handle_timer_irq( void )
 	curVal += interval;
 	put32(TIMER_C1, curVal);
 	put32(TIMER_CS, TIMER_CS_M1);
-	printk("\t\t\tTimer interupt recieved\tContext switch\n");
+	printk("\t\t\tTimer interupt recieved\n");
 	timer_tick();
 }
 void disable_timer_irq( void ) 

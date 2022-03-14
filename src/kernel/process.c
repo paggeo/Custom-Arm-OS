@@ -25,8 +25,9 @@ void cat(char *array)
 void low_priority_process(char *array)
 {
 	char buf[2] = {0};
+  sys_change_prior(LOW_PRIORITY);
   int count = 0;
-	while (count < 10){
+	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
 			call_sys_write(buf);
@@ -34,14 +35,16 @@ void low_priority_process(char *array)
 		}
     count++;
 	}
+	call_sys_exit();
 }
 
 void middle_priority_process(char *array)
 {
   char buf[2] = {0};
+  sys_change_prior(MIDDLE_PRIORITY);
 
   int count = 0;
-	while (count < 10){
+	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
 			call_sys_write(buf);
@@ -49,6 +52,7 @@ void middle_priority_process(char *array)
 		}
     count++;
 	}
+	call_sys_exit();
 }
 
 void high_priority_process(char *array)
@@ -56,9 +60,9 @@ void high_priority_process(char *array)
   printk("\nHigh priority process\n");
 
   char buf[2] = {0};
-  sys_change_prior(5);
+  sys_change_prior(HIGH_PRIORITY);
   int count = 0;
-	while (count < 10){
+	while (count < 5){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
 			call_sys_write(buf);
@@ -66,37 +70,23 @@ void high_priority_process(char *array)
 		}
     count++;
 	}
-  sys_change_prior(0);
   printk("\nEnd of high priority process\n");
+	call_sys_exit();
 }
 
 void kill_processes()
 {
-	/*
-	 * Preemption is disabled for the current task.
-	 * We don't want to be rescheduled to a different task
-	 * in the middle of killing another task.
-	 */
 	preempt_disable();
 
-	/* Allocate pointer for the new task */
 	struct task_struct *p;
 
-	/*
-	 * Iterate over all tasks and try to kill all runing ones.
-	 */
 	for (int i = 0; i < NR_TASKS; i++) {
 		p = task[i];
-		/* If it is an allocated task, and not the init task */
 		if (p != 0 && i != 0) {
-			/* Free allocated memory of task */
             free_page((unsigned long) p);
-			/* Decrease number of processes */
 			nr_tasks--;
-			/* Remove task_struct from task array */
 			task[i] = 0;
 
-			/* printk("Killed task %d, located at %d\n", i, p ); */
 		}
 	}
 
@@ -106,15 +96,27 @@ void user_process(){
 	printk("\nUser processes started \n");
 	unsigned long stack = call_sys_malloc();
 	if (stack < 0) {
-		printk("Error while allocating stack for process 1\n\r");
+		printk("Error while allocating stack for process 3\n\r");
 		return;
 	}
 	int err = call_sys_clone((unsigned long)&low_priority_process, (unsigned long)"12345", stack);
 	if (err < 0){
+		printk("Error while clonning process 2\n\r");
+		return;
+	} 
+
+  stack = call_sys_malloc();
+	if (stack < 0) {
+		printk("Error while allocating stack for process 1\n\r");
+		return;
+	}
+  err = call_sys_clone((unsigned long)&high_priority_process, (unsigned long)"zqrty", stack);
+	if (err < 0){
 		printk("Error while clonning process 1\n\r");
 		return;
 	} 
-	stack = call_sys_malloc();
+	
+  stack = call_sys_malloc();
 	if (stack < 0) {
 		printk("Error while allocating stack for process 1\n\r");
 		return;
@@ -124,12 +126,12 @@ void user_process(){
 		printk("Error while clonning process 2\n\r");
 		return;
 	} 
-	stack = call_sys_malloc();
+  stack = call_sys_malloc();
 	if (stack < 0) {
-		printk("Error while allocating stack for process 3\n\r");
+		printk("Error while allocating stack for process 1\n\r");
 		return;
 	}
-	err = call_sys_clone((unsigned long)&high_priority_process, (unsigned long)"zqrty", stack);
+	err = call_sys_clone((unsigned long)&middle_priority_process, (unsigned long)"rtyui", stack);
 	if (err < 0){
 		printk("Error while clonning process 2\n\r");
 		return;

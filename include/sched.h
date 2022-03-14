@@ -17,11 +17,10 @@
 
 #define PF_KTHREAD		            	0x00000002	
 
-#define HIGH_PRIORITY     5
-
-#define MIDDLE_PRIORITY   0
-
-#define LOW_PRIORITY      0
+#define SCHED_PRIORITY    5
+#define HIGH_PRIORITY     30
+#define MIDDLE_PRIORITY   20
+#define LOW_PRIORITY      10
 
 
 extern struct task_struct *current;
