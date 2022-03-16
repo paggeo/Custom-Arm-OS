@@ -13,19 +13,23 @@ void kernel_main(void)
 {
 	uart_init();
   printk("\n\n");
-	printk("                  _____ _____ \n");
-	printk(" ___ ___ _____   |     |   __|\n");
-	printk("| . |  _|     |  |  |  |__   |\n");
-	printk("|__,|_| |_|_|_|  |_____|_____|\n");
+	printk("Greetings !!! this is a custom rasberry pi operating system  created for the course Embedded Systems Design of the NTUA_ \n");
+	printk("this is a custom rasberry pi operating system  \n");
+	printk("created for the course Embedded Systems Design of the NTUA_ \n\n\n");
+	
+	printk("Collaborators of this project : \n\n");
+	printk("George Pagonis -- 03117030: \n");
+	printk("Dimitrios Lampros -- 03117070 : \n");
+	printk("Dimitrios Stamatios Bouras -- 03117072: \n");
+	
+	printk("\n initialization...\n\n");
 
-	printk("\nCustom Arm OS initializing...\n\n");
+  printk("\n\tBoard: Raspberry Pi 3 A+ \n");
+  //printk("\tArch: aarch64\n");
 
-  printk("\n\tBoard: Raspberry Pi 3\n");
-  printk("\tArch: aarch64\n");
-
-  printk("Initializing IRQs...\n");
+  printk("Interrupts Initialization \n");
 	irq_vector_init();
-	printk("Done\n");
+	printk("Interrupts have been initialized successfully Done\n");
 	
   /* printk("Enabling IRQs...\n"); */
 	/* timer_init(); */
@@ -33,11 +37,11 @@ void kernel_main(void)
 	
   printk("Enabling IRQ controllers...\n");
 	enable_interrupt_controller();
-	printk("Done\n");
+	printk("IRQ controllers have been enabled !n");
 	
   printk("Enabling IRQs...\n");
   enable_irq();
-	printk("Done\n");
+	printk("IRQs have been enabled !\n");
 
   
 
@@ -46,9 +50,13 @@ void kernel_main(void)
 	/* 	printk("error while starting kernel process"); */
 	/* 	return; */
 	/* } */
+
+	printk("Setting up console ..... \n");
+	
   char device[DEVICE_LENGTH];
   strcpy(device, "pi-3");
-
+	printk("Console set up successfully  ..... \n");
+	
   console(device);
 	/* while (1){ */
 	/* 	schedule(); */

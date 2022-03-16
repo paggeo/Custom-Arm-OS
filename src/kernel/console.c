@@ -29,8 +29,10 @@ int console_get_cmd(char *input)
 		return cmd_help;
   else if (strcmp(input, "schedule") == 0)
 		return cmd_schedule;
-  else if (strcmp(input, "cat") == 0)
-		return cmd_cat;
+  else if (strcmp(input, "cat_1") == 0)
+		return cmd_cat_1;
+		else if (strcmp(input, "cat_2") == 0)
+		return cmd_cat_2;
 	else
 		return -1;
 }
@@ -65,8 +67,11 @@ void console(char *device)
       case cmd_schedule:
         console_schedule();
         break;
-      case cmd_cat:
-        console_cat();
+      case cmd_cat_1:
+        console_cat_1();
+        break;
+		case cmd_cat_2:
+        console_cat_2();
         break;
       default:
         printk("%s: command not found\n", input);
@@ -97,9 +102,9 @@ void console_schedule(){
   printk("\nEnd of schedule\n");
 };
 
-void console_cat(){
+void console_cat_1(){
 	timer_init();
-  int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process_cat, 0, 0);
+  int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process_cat_1, 0, 0);
 	if (res < 0) {
 		printk("error while starting kernel process");
 		return;
@@ -113,6 +118,21 @@ void console_cat(){
   kill_processes();
 };
 
+void console_cat_2(){
+	timer_init();
+  int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process_cat_2, 0, 0);
+	if (res < 0) {
+		printk("error while starting kernel process");
+		return;
+	}
+  int counter = 0;
+  while (counter<100){
+		schedule();
+    counter++;
+	}
+  disable_timer_irq();
+  kill_processes();
+};
 void console_help()
 {
 	printk("Available commands:\n");
@@ -120,6 +140,8 @@ void console_help()
 	printk("        Prints available commands to the console.\n");
 	printk("    schedule:\n");
 	printk("        Demo for scheduling.\n");
-	printk("    cat:\n");
-	printk("        System call for cat.\n");
+	printk("    cat_1:\n");
+	printk("        System call for cat number 1.\n");
+	printk("    cat_2:\n");
+	printk("        System call for cat number 2.\n");
 }

@@ -23,10 +23,16 @@ void print_prior(){
 /* String array, for the message of each process */
 static char proc_args[NR_TASKS][10];
 
-void cat(char *array)
+void cat_1(char *array)
+{
+  call_sys_cat(1);
+}
+
+void cat_2(char *array)
 {
   call_sys_cat(2);
 }
+
 
 void low_priority_process(char *array)
 {
@@ -156,7 +162,7 @@ void kernel_process(){
   }
 }
 
-void user_process_cat(){
+void user_process_cat_1(){
 	
 	printk("\nUset cat process started \n");
 	unsigned long stack = call_sys_malloc();
@@ -164,7 +170,22 @@ void user_process_cat(){
 		printk("Error while allocating stack for process 1\n\r");
 		return;
 	}
-	int err = call_sys_clone((unsigned long)&cat, (unsigned long)"12345", stack);
+	int err = call_sys_clone((unsigned long)&cat_1, (unsigned long)"12345", stack);
+	if (err < 0){
+		printk("Error while clonning process 1\n\r");
+		return;
+	} 
+	call_sys_exit();
+}
+void user_process_cat_2(){
+	
+	printk("\nUset cat process started \n");
+	unsigned long stack = call_sys_malloc();
+	if (stack < 0) {
+		printk("Error while allocating stack for process 1\n\r");
+		return;
+	}
+	int err = call_sys_clone((unsigned long)&cat_2, (unsigned long)"12345", stack);
 	if (err < 0){
 		printk("Error while clonning process 1\n\r");
 		return;
@@ -172,9 +193,17 @@ void user_process_cat(){
 	call_sys_exit();
 }
 
-void kernel_process_cat(){
+void kernel_process_cat_1(){
 	printk("\nKernel cat process started. EL %d\r\n", get_el());
-	int err = move_to_user_mode((unsigned long)&user_process_cat);
+	int err = move_to_user_mode((unsigned long)&user_process_cat_1);
+	if (err < 0){
+		printk("Error while moving process to user mode\n\r");
+  }
+}
+  
+void kernel_process_cat_2(){
+	printk("\nKernel cat process started. EL %d\r\n", get_el());
+	int err = move_to_user_mode((unsigned long)&user_process_cat_2);
 	if (err < 0){
 		printk("Error while moving process to user mode\n\r");
   }
