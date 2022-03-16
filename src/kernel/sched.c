@@ -58,8 +58,6 @@ void _schedule(void)
           p->counter = 0;
         }
         else  p->counter = (p->counter >> 1) + p->priority;
-        /* p->counter = (p->counter >> 1); */ 
-        
 			}
 		}
 	}
@@ -91,14 +89,12 @@ void schedule_tail(void) {
 void timer_tick()
 {
 	--current->counter;
-  printk("Counter : %d\n",current->counter);
 	if (current->preempt_count == SCHED_PRIORITY || (current->state != TASK_ZOMBIE && current->priority== HIGH_PRIORITY)) {
 	/* if (current->counter>0 || current->preempt_count == SCHED_PRIORITY || (current->state != TASK_ZOMBIE && current->priority== HIGH_PRIORITY)) { */
 		return;
 	}
 	current->counter=0;
 	enable_irq();
-  printk("Pass to schedule\n");
 	_schedule();
 	disable_irq();
 }
