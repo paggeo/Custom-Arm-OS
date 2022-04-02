@@ -1,6 +1,9 @@
 # Custom operating system for Armv8-A
 
-![armOS-logo](docs/rasberrypi.jpg)
+
+<p align="center">
+  <img width="460" height="300" src="docs/resberrypi.jpg">
+</p>
 
 ![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS?color=brightgreen&logo=Open%20Source%20Initiative) 
 
