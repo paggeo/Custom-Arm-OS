@@ -58,7 +58,7 @@ make
     - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
     - Architecture : Armv8-A
     - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
-- Arduino Nano 
+- Arduino Nano with [arduino IDE](https://www.arduino.cc/en/software)
 - Cables 
     - TTL to Usb
     - Usb power cables
