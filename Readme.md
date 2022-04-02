@@ -114,12 +114,6 @@ Same as with UART, we have set up.
 
 For the pins connections you need 3 cables to connect:
 
-| Raspberry | Nano
-| GPIO2 --> |  A4
-| GPIO3 --> |  A5
-| GND   --> |  GND
-
-
 | Raspberry | Nano |
 | --------- | ---- |
 | GPIO2 --> | A4   |
@@ -127,10 +121,12 @@ For the pins connections you need 3 cables to connect:
 | GND   --> | GND  |
 
 
-Tip on debugging. Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
+Tip on debugging. 
+
+- Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
 
 
-If you are getting CLKT timeout then it probably means that the slave is reading/writing slower than expected. This can be fixed by either increasing baudrate of slave in its serial IOs (that’s what we did), or if this is not possible increasing timeout window from master (raspberry). 
+- If you are getting CLKT timeout then it probably means that the slave is reading/writing slower than expected. This can be fixed by either increasing baudrate of slave in its serial IOs (that’s what we did), or if this is not possible increasing timeout window from master (raspberry). 
 
 
 
