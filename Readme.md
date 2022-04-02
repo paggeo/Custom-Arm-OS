@@ -32,7 +32,6 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
     - [Console <a name="console"></a>](#console-)
   - [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-)
   - [References <a name="references"></a>](#references-)
-    - [Manuals <a name="manuals"></a>](#manuals-)
     - [Wikis <a name="wikis"></a>](#wikis-)
     - [Repositories <a name="repositories"></a>](#repositories-)
     - [Book <a name="book"></a>](#book-)
@@ -242,12 +241,6 @@ initialization...
 ```
 
 ## References <a name="references"></a>
-
-### Manuals <a name="manuals"></a>
-
-- [BROADCOM BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/README.md)
-- [BROADCOM BCM2711](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/README.md)
-- [AArch64 memory management](https://developer.arm.com/documentation/101811/latest)
 
 ### Wikis <a name="wikis"></a>
 
