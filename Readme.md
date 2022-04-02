@@ -4,7 +4,7 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS?color=brightgreen&logo=Open%20Source%20Initiative) 
 
-![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom)![Cpu](https://img.shields.io/badge/cpy-Arm%20Cortex-53-red?style=flat&logo=Raspberry%20Pi&logoColor=white)
+![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom) ![Cpu](https://img.shields.io/badge/cpy-Arm%20Cortex-53-red?style=flat&logo=Raspberry%20Pi&logoColor=white)
  ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
 
 
