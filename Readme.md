@@ -11,7 +11,10 @@ Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architectur
 
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
-## How to start
+## Table of content
+1. [How to start](#introduction)
+
+## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
     - For all compilers : [Here](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
 - Install screen program.
@@ -26,7 +29,22 @@ make
 - Open screen with `sudo screen /dev/ttyUSB0 115200`
 - Power Rasberry pi 
 
-# Technology used
+## Demo 
+We created a video with a demo , so you can see the results of this kernel. 
+The demo can be found in this google drive [link](https://drive.google.com/drive/folders/19DO5QxhzmMUzHWNDTsFCbGuKfKurns4N)
+
+To understand the scheduler demo : 
+- We created 4 tasks : 
+    - task("12345",L)
+    - task("zqrty",H)
+    - task("abcde",M)
+    - task("rtyui",M)
+- L task starts its excecution
+- When H task starts, scheduler wait for this to be finished ( Non-Preemptive).
+- In the mean time the 2 M tasks have come, and when H task finished they start to be excecuted cicrularly.
+- Because the Low task has not been scheduled for a long time, it changes its prioriry to Middle. 
+
+## Technology used
 - Board : Rasberry Pi 3 A+
     - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
     - Architecture : Armv8-A
@@ -169,82 +187,10 @@ armOS initializing...
 Initializing IRQs...Done
 Enabling IRQ controllers...Done
 Enabling IRQs...Done
-Initializing LED...Done### Manuals
-```
-- [BROADCOM BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/README.md)
-- [BROADCOM BCM2711](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/README.md)
-- [AArch64 memory management](https://developer.arm.com/documentation/101811/latest)
+Initializing LED...Done
 
-### Wikis
-
-- [OSDev.org - Raspberry Pi Bare Bones](https://wiki.osdev.org/ARM_RaspberryPi_Tutorial_C)
-- [ARM Developer](https://developer.arm.com/)
-
-### Repositories
-
-- [Linux Kernel - /arch/arm/](https://github.com/torvalds/linux/tree/master/arch/arm)
-- [Learning operating system development using Linux kernel and Raspberry Pi](https://github.com/s-matyukevich/raspberry-pi-os)
-- [Building an Operating System for the Raspberry Pi](https://jsandler18.github.io/)
-- [Raspberry Pi ARM based bare metal examples](https://github.com/dwelch67/raspberrypi)
-- [Bare metal Raspberry Pi 3 tutorials](https://github.com/bztsrc/raspi3-tutorial)
-- [Writing a "bare metal" operating system for Raspberry Pi 4](https://github.com/isometimes/rpi4-osdev)
-
-Showing the available commands of the console, using the `help` command:
-```
-root@pi-4# help
-Available commands:
-    help:
-        Prints available commands to the console.
-    help_led:
-        Prints available LED commands to the console.
-    create_procs:
-        Creates proc_num kernel processes.
-    run_procs:
-        Runs the created kernel processes concurrently.
-    kill_procs:
-        Kills all created kernel processes.
-    halt:
-        Halts the system.
 ```
 
-
-### Software
-- The [Pi Imager](https://www.raspberrypi.org/software/) program.
-- A Linux/Unix development environment to build the project.
-- A Serial Console emulator (suggested: `screen`).
-
-### Toolchain
-An ARM Cross-Compiler Toolchain:
-- For building the 64-bit kernel: `aarch64-none-elf-gcc` [Download from ARM website - For Linux x86_64 Hosts](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
-
-
-## Instructions
-
-### Install Toolchain
-For detailed instructions, see the [Install Toolchain](https://github.com/thanoskoutr/armOS/wiki/Install-Toolchain) wiki page.
-
-### Serial Connection with Raspberry PI
-For detailed instructions, see the [Serial Connection](https://github.com/thanoskoutr/armOS/wiki/Serial-Connection) wiki page.
-
-
-### Running on Raspberry Pi
-For detailed instructions, see the [Installation](https://github.com/thanoskoutr/armOS/wiki/Installation) wiki page.
-
-Basic overview of the steps:
-
-- Format the SD card, with the Raspberry Pi Imager.
-- Set cross-compiler path on the Makefile.
-- Clone the project.
-- Build project using `Makefile`.
-- Transfer `.img`, `config.txt` to SD Card.
-- Unmount SD card.
-- Put SD card on Pi.
-- Connect USB-to-TTL serial cable to the Pi and Linux host.
-- Open `screen`.
-- Power on the Pi.
-
-
-## Resources
 
 ### Manuals
 
