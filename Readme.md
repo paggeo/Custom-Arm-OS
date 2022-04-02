@@ -24,6 +24,7 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 ## Functionalities 
 
 ### Peripherals 
+
 #### Uart 1
 
 We are using "miniUART" or "UART1" , because UART0(PL011) is connected to bluetooth and we want to keep this functionality open for development. 
@@ -32,7 +33,7 @@ We are using "miniUART" or "UART1" , because UART0(PL011) is connected to blueto
 
 - Then we disable flow control and interrupts just to make it easier to test. Also, baud rate is set to 115200 and the 8 bit ascii mode (extended) is selected . The above is all done via AUX registers for UART1 for which we have calculated their addresses according to the datasheet again.
 
-- Note: according to this https://forums.raspberrypi.com/viewtopic.php?f=63&t=138162 , to avoid clock skewing error in uart we set the clock frequency to 250 MHz in the config file of the boot partition in the SD card of the Pi 3. 
+- Note: according to [this](https://forums.raspberrypi.com/viewtopic.php?f=63&t=138162) , to avoid clock skewing error in uart we set the clock frequency to 250 MHz in the config file of the boot partition in the SD card of the Pi 3. 
 
 - For testing, “screen” program was used along with a TTL cable. Terminal Command : sudo screen /dev/ttyUSB0 115200 . Baud Rate and setup is explained in code.
 
@@ -50,6 +51,25 @@ If you are getting CLKT timeout then it probably means that the slave is reading
 
 
 
+### Interrupts 
+We are going to use 2 from 4 different types of interrupts :
+-  Synchronous  Interrupts : Software interrupts called with the instruction `svc`.
+-  IRQ : External , low priority , interrupts.
+
+We used interrupts for 2 main tasks : 
+- Timer: IRQ in specific time interval 
+- System Call : Svc in EL0 state
+
+### System calls 
+We implement 7 system calls that helped us in the os : 
+- Write : Takes a argument and prints it in the screen.
+- Malloc : Allocate a new memory page(4Kb) for a user process.
+- Clone : Creates new process. Takes the argument of a process code and it's arguments.
+- Exit : Free up the memory page of a process and makes it ZOMBIE.
+- Cat : Prints cats in the screen.
+- Change_prior: Set the priority of a process.
+- Get_Prior: Get the priority of a process.
+  
 ## Documentation
 There is proper documentation available for the project in two different formats:
 
