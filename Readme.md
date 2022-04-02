@@ -14,7 +14,7 @@ Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architectur
 
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
-## Table of content
+## Table of contents
 - [Custom operating system for Armv8-A](#custom-operating-system-for-armv8-a)
   - [Table of content](#table-of-content)
   - [How to start <a name="introduction"></a>](#how-to-start-)
