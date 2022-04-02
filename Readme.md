@@ -198,23 +198,29 @@ Available commands:
 A screenshot of the kernel in action, after booting up:
 
 ```
-                  _____ _____
- ___ ___ _____   |     |   __|
-| . |  _|     |  |  |  |__   |
-|__,|_| |_|_|_|  |_____|_____|
 
-armOS initializing...
-
-        Board: Raspberry Pi 4
-        Arch: aarch64
+Greeting !!!
+This is a custom rasberry pi operationg system
+Created for the course Embedded System Design of the Ntua
 
 
------ Exception level: EL1 -----
-Initializing IRQs...Done
-Enabling IRQ controllers...Done
-Enabling IRQs...Done
-Initializing LED...Done
 
+Collaborators of this project
+George Pagonis -- 03117030:
+Dimitrios Lampros -- 03117070
+Dimitrios Stamatios Bouras -- 03117072
+
+initialization...
+
+        Board: Raspberry Pi 3 A+
+            Interrupts Initialization 
+            Interrupts have been initialized successfully Done
+            Enabling IRQ controllers...
+            IRQ controllers have been enabled 
+            Enabling IRQs...
+            IRQs have been enabled !
+            Initializing I2C...
+            I2C has been enabled !
 ```
 
 ## References <a name="references"></a>
