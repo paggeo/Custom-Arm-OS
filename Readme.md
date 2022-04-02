@@ -258,6 +258,7 @@ initialization...
 
 - [Linux Kernel - /arch/arm/](https://github.com/torvalds/linux/tree/master/arch/arm)
 - [Learning operating system development using Linux kernel and Raspberry Pi](https://github.com/s-matyukevich/raspberry-pi-os)
+- [RPI OS dev: Low Level Devel](https://github.com/rockytriton/LLD/tree/main/rpi_bm)
 - [Building an Operating System for the Raspberry Pi](https://jsandler18.github.io/)
 - [Raspberry Pi ARM based bare metal examples](https://github.com/dwelch67/raspberrypi)
 - [Bare metal Raspberry Pi 3 tutorials](https://github.com/bztsrc/raspi3-tutorial)
