@@ -4,8 +4,7 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS?color=brightgreen&logo=Open%20Source%20Initiative) 
 
-![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom) ![Cpu](https://img.shields.io/badge/cpy-Arm%20Cortex-53-red?style=flat&logo=Raspberry%20Pi&logoColor=white)
- ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
+![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom) ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
 
 
 Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
@@ -16,8 +15,8 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 - [Custom operating system for Armv8-A](#custom-operating-system-for-armv8-a)
   - [Table of content](#table-of-content)
   - [How to start <a name="introduction"></a>](#how-to-start-)
-  - [Demo <a name="demo"></a>](#demo-)
   - [Technology used <a name="technology_used"></a>](#technology-used-)
+  - [Demo <a name="demo"></a>](#demo-)
   - [Functionalities <a name="functionalities"></a>](#functionalities-)
     - [Peripherals <a name="peripherals"></a>](#peripherals-)
       - [Uart 1<a name="uart_1"></a>](#uart-1)
@@ -52,6 +51,17 @@ make
 - Open screen with `sudo screen /dev/ttyUSB0 115200`
 - Power Rasberry pi 
 
+## Technology used <a name="technology_used"></a>
+- Board : Rasberry Pi 3 A+
+    - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
+    - Architecture : Armv8-A
+    - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
+- Arduino Nano 
+- Cables 
+    - TTL to Usb
+    - Usb power cables
+- SD card
+
 ## Demo <a name="demo"></a> 
 We created a video with a demo , so you can see the results of this kernel. 
 The demo can be found in this google drive [link](https://drive.google.com/drive/folders/19DO5QxhzmMUzHWNDTsFCbGuKfKurns4N)
@@ -67,16 +77,6 @@ To understand the scheduler demo :
 - In the mean time the 2 M tasks have come, and when H task finished they start to be excecuted cicrularly.
 - Because the Low task has not been scheduled for a long time, it changes its prioriry to Middle. 
 
-## Technology used <a name="technology_used"></a>
-- Board : Rasberry Pi 3 A+
-    - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
-    - Architecture : Armv8-A
-    - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
-- Arduino Nano 
-- Cables 
-    - TTL to Usb
-    - Usb power cables
-- SD card
 
 
 ## Functionalities <a name="functionalities"></a>
