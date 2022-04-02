@@ -12,7 +12,30 @@ Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architectur
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
 ## Table of content
-1. [How to start](#introduction)
+- [Custom operating system for Armv8-A](#custom-operating-system-for-armv8-a)
+  - [Table of content](#table-of-content)
+  - [How to start <a name="introduction"></a>](#how-to-start-)
+  - [Demo <a name="demo"></a>](#demo-)
+  - [Technology used <a name="technology_used"></a>](#technology-used-)
+  - [Functionalities <a name="functionalities"></a>](#functionalities-)
+    - [Peripherals <a name="peripherals"></a>](#peripherals-)
+      - [Uart 1<a name="uart_1"></a>](#uart-1)
+      - [I2C <a name="i2c"></a>](#i2c-)
+    - [Interrupts <a name="interrupts"></a>](#interrupts-)
+    - [System calls <a name="system_calls"></a>](#system-calls-)
+    - [Tasks <a name="tasks"></a>](#tasks-)
+      - [Priority <a name="priority"></a>](#priority-)
+      - [Task Code<a name="task_code"></a>](#task-code)
+    - [Scheduler <a name="scheduler"></a>](#scheduler-)
+    - [Console <a name="console"></a>](#console-)
+    - [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-)
+  - [References <a name="references"></a>](#references-)
+    - [Manuals <a name="manuals"></a>](#manuals-)
+    - [Wikis <a name="wikis"></a>](#wikis-)
+    - [Repositories <a name="repositories"></a>](#repositories-)
+    - [Book <a name="book"></a>](#book-)
+  - [License <a name="licence"></a>](#license-)
+  -[License](#license) 
 
 ## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
