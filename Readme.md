@@ -36,6 +36,7 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
     - [Repositories <a name="repositories"></a>](#repositories-)
     - [Book <a name="book"></a>](#book-)
   - [License <a name="licence"></a>](#license-)
+  - [Collaborators <a name="Collaborators"></a>](#Collaborators-)
 
 ## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
@@ -263,3 +264,9 @@ initialization...
 
 ## License <a name="licence"></a>
 This project is licensed under the MIT license. See [LICENSE](LICENSE) for details.
+
+## Collaborators <a name="Collaborators"></a>
+- George Pagonis
+- Dimitrios Bouras
+- Dimitrios Lampros
+* Supervisor: Manolis Katsaragakis
