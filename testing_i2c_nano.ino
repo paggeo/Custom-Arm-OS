@@ -20,7 +20,6 @@ void setup() {
 }
 
 void receive_data() {
-  //Serial.println("pas kalaaa?.");
   while (Wire.available() > 0) {
     char buffer[32];
     char b = Wire.read();
