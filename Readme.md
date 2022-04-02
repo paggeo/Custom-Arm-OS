@@ -11,7 +11,7 @@
 
 
 Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
-For a demo of the whole project, please check [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-) !
+For a demo of the whole project, please check  [Demo <a name="demo"></a>](#demo-) !
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
 ## Table of contents
