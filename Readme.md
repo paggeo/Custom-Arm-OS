@@ -1,4 +1,4 @@
-# armOS
+# Custom operating system for Armv8-A
 
 ![armOS-logo](docs/rasberrypi.jpg)
 
@@ -7,44 +7,18 @@
 ![Board](https://img.shields.io/badge/board-Raspberry%20Pi%20Zero%20W-red?style=flat&logo=Raspberry%20Pi) ![Board](https://img.shields.io/badge/board-Raspberry%20Pi%204-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2835-orange?style=flat&logo=Broadcom) ![chip](https://img.shields.io/badge/chip-BCM2711-orange?style=flat&logo=Broadcom) ![arch](https://img.shields.io/badge/arch-armv6-lightblue?style=flat) ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
 
 
-Simple ARM Operating System for the Raspberry Pi, supporting Aarch32 and Aarch64 architectures. It supports both Raspberry Pi Zero / Zero W and Raspberry Pi 4.
+Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
 
-This project was made for the Embedded Systems course at NTUA 2020-2021.
+This project was made for the Embedded Systems course at NTUA 2021-2022.
 
-**Quick Links:**
-- Wiki Documentation: https://github.com/thanoskoutr/armOS/wiki
-- Doxygen Documentation: https://thanoskoutr.github.io/armOS/
+## Technology used 
+- Board : Rasberry Pi 3 A+
+  - Architecture : Armv8-A
+  - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
 
 ## Table of Contents
 
-- [armOS](#armos)
-  - [Table of Contents](#table-of-contents)
-  - [About](#about)
-  - [Documentation](#documentation)
-    - [Doxygen Documentation](#doxygen-documentation)
-    - [Wiki Documentation](#wiki-documentation)
-  - [Project Structure](#project-structure)
-  - [Features](#features)
-    - [Demo of kernel](#demo-of-kernel)
-    - [Available Commands](#available-commands)
-  - [Requirements](#requirements)
-    - [Boards](#boards)
-    - [Tools](#tools)
-    - [Software](#software)
-    - [Toolchain](#toolchain)
-  - [Instructions](#instructions)
-    - [Install Toolchain](#install-toolchain)
-    - [Serial Connection with Raspberry PI](#serial-connection-with-raspberry-pi)
-    - [Running on Raspberry Pi](#running-on-raspberry-pi)
-    - [Generating Documentation](#generating-documentation)
-    - [Implementation Details](#implementation-details)
-  - [Technologies Used](#technologies-used)
-  - [Resources](#resources)
-    - [Manuals](#manuals)
-    - [Wikis](#wikis)
-    - [Repositories](#repositories)
-    - [Book](#book)
-  - [License](#license)
+
 
 ## About
 This simple Operating System (kernel) is inspired and based on the Linux kernel, especially the ARM specific architecture parts. The features of the kernel are presented in detail in a later section. The main focus of this project, was to dive deep into core OS related concepts (such as the scheduler, drivers, handling processes/memory) and get to know the hardware and low level features of ARM embedded devices such as the Raspberry Pi.
