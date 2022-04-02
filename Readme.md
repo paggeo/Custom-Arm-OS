@@ -43,7 +43,7 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
     - For all compilers : [Here](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
 - Install screen program.
-- Set up Sd card with 2 partitions. We suggest you do use that by installing Rasberry Os : [here](https://www.raspberrypi.com/software/)
+- Set up Sd card with 2 partitions. We suggest you do that by installing Rasberry Os : [here](https://www.raspberrypi.com/software/)
 - Replace confix.txt in /boot partition 
 - Change ARMGMU flag in Makefile according to your crosscompiler. 
 ```
@@ -103,6 +103,22 @@ We are using "miniUART" or "UART1" , because UART0(PL011) is connected to blueto
 Use of Broadcom Serial Controller (BSC).
 
 We are gonna use BSC1.
+
+I2C Instructions:
+Same as with UART, we have set up.
+1. Proper functions to pins 2,3.
+2. Disabled Pull Up/Down resistors
+3. Know the exact amount of bytes to send
+4. Know the slave address 
+5. Set I2C speed at a standard 100khz.
+
+
+For the pins connections you need 3 cables to connect:
+
+Raspberry | Nano
+GPIO2 --> |  A4
+GPIO3 --> |  A5
+GND   --> |  GND
 
 
 Tip on debugging. Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
