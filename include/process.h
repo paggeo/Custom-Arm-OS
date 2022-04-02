@@ -8,9 +8,13 @@ void high_priority_process(char *array);
 void user_process();
 void kernel_process();
 
-void cat(char *array);
-void user_process_cat();
-void kernel_process_cat();
+void cat_1(char *array);
+void user_process_cat_1();
+void kernel_process_cat_1();
+
+void cat_2(char *array);
+void user_process_cat_2();
+void kernel_process_cat_2();
 
 void create_processes(int proc_num);
 void kill_processes();

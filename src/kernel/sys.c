@@ -22,7 +22,6 @@ unsigned long sys_malloc(){
 }
 
 void sys_exit(){
-  /* printk("Exit this process\n"); */
 	exit_process();
 }
 void sys_cat(unsigned int num){
@@ -33,14 +32,14 @@ void sys_cat(unsigned int num){
     printk("     *           MMM88&&&&&&&&\n");  
     printk("                 MMM88&&&&&&&&\n");  
     printk("                 'MMM88&&&&&&'\n");  
-    printk("                   'MMM8&&&'      *    _\n");  
-    printk("          ||___||                      \\n"); 
-    printk("         =) ^Y^ (=   ||_||              ||    '\n");  
+    printk("                   'MMM8&&&'      *    \n");  
+    printk("          ||___||                      _\n"); 
+    printk("         =) ^Y^ (=   ||_||             ||    '\n");  
     printk("          |  ^  |    )a a '._.-""""-.  //\n");  
     printk("           )=*=(    =|T_= /    ~  ~  |//\n");  
     printk("          /     |     ``|   ~   / ~  /\n");  
     printk("          |     |         |~   | |  ~/\n");  
-    printk("         /| | | ||         |  ~/- | ~\\n"); 
+    printk("         /| | | ||         |  ~/- | ~\n"); 
     printk("         || | |_|/|        || |  // /`\n"); 
     printk("  jgs_/|_//_// __//|_/|_/|_((_||((_//|_/|_/|_\n");  
     printk(" |  |  |  | |_) |  |  |  |  |  |  |  |  |  |\n");  
@@ -51,7 +50,7 @@ void sys_cat(unsigned int num){
     }
     else if (num ==2) {
         printk("                                 _\n"); 
-        printk("                                | \n"); 
+        printk("                                | |\n"); 
         printk("                                | |\n"); 
         printk("                                | |\n"); 
         printk("           ||                  | |\n"); 

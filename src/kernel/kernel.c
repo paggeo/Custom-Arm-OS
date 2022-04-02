@@ -11,35 +11,42 @@
 #include "clib/string.h"
 void kernel_main(void)
 {
-	uart_init();
+  uart_init();
   printk("\n\n");
-	printk("                  _____ _____ \n");
-	printk(" ___ ___ _____   |     |   __|\n");
-	printk("| . |  _|     |  |  |  |__   |\n");
-	printk("|__,|_| |_|_|_|  |_____|_____|\n");
+	printk("Greetings !!!\n"); 
+	printk("This is a custom rasberry pi operating system  \n");
+	printk("Created for the course Embedded Systems Design of the NTUA_ \n\n\n");
+	
+	printk("Collaborators of this project : \n\n");
+	printk("George Pagonis -- 03117030: \n");
+	printk("Dimitrios Lampros -- 03117070 : \n");
+	printk("Dimitrios Stamatios Bouras -- 03117072: \n");
+	
+	printk("\n initialization...\n\n");
 
-	printk("\nCustom Arm OS initializing...\n\n");
+  printk("\n\tBoard: Raspberry Pi 3 A+ \n");
+  //printk("\tArch: aarch64\n");
 
-  printk("\n\tBoard: Raspberry Pi 3\n");
-  printk("\tArch: aarch64\n");
-
-  printk("Initializing IRQs...\n");
+  printk("\t\tInterrupts Initialization \n");
 	irq_vector_init();
-	printk("Done\n");
+	printk("\t\tInterrupts have been initialized successfully Done\n");
 	
   /* printk("Enabling IRQs...\n"); */
 	/* timer_init(); */
 	/* printk("Done\n"); */
 	
-  printk("Enabling IRQ controllers...\n");
+  printk("\t\tEnabling IRQ controllers...\n");
 	enable_interrupt_controller();
-	printk("Done\n");
+	printk("\t\tIRQ controllers have been enabled !n");
 	
-  printk("Enabling IRQs...\n");
+  printk("\t\tEnabling IRQs...\n");
   enable_irq();
-	printk("Done\n");
-
+	printk("\t\tIRQs have been enabled !\n");
   
+  printk("\t\tInitializing I2C...\n");
+  i2c_init();
+  printk("\t\tI2C has been enabled !\n");
+
 
 	/* int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0); */
 	/* if (res < 0) { */
@@ -47,7 +54,7 @@ void kernel_main(void)
 	/* 	return; */
 	/* } */
   char device[DEVICE_LENGTH];
-  strcpy(device, "pi-3");
+  strcpy(device, "pi3a+");
 
   console(device);
 	/* while (1){ */
