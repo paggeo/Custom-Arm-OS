@@ -29,7 +29,7 @@ make
 - Open screen with `sudo screen /dev/ttyUSB0 115200`
 - Power Rasberry pi 
 
-## Demo 
+## Demo <a name="demo"></a> 
 We created a video with a demo , so you can see the results of this kernel. 
 The demo can be found in this google drive [link](https://drive.google.com/drive/folders/19DO5QxhzmMUzHWNDTsFCbGuKfKurns4N)
 
@@ -44,7 +44,7 @@ To understand the scheduler demo :
 - In the mean time the 2 M tasks have come, and when H task finished they start to be excecuted cicrularly.
 - Because the Low task has not been scheduled for a long time, it changes its prioriry to Middle. 
 
-## Technology used
+## Technology used <a name="technology_used"></a>
 - Board : Rasberry Pi 3 A+
     - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
     - Architecture : Armv8-A
@@ -56,11 +56,11 @@ To understand the scheduler demo :
 - SD card
 
 
-## Functionalities 
+## Functionalities <a name="functionalities"></a>
 
-### Peripherals 
+### Peripherals <a name="peripherals"></a>
 
-#### Uart 1
+#### Uart 1<a name="uart_1"></a>
 
 We are using "miniUART" or "UART1" , because UART0(PL011) is connected to bluetooth and we want to keep this functionality open for development. 
 
@@ -72,7 +72,7 @@ We are using "miniUART" or "UART1" , because UART0(PL011) is connected to blueto
 
 - For testing, “screen” program was used along with a TTL cable. Terminal Command : sudo screen /dev/ttyUSB0 115200 . Baud Rate and setup is explained in code.
 
-#### I2C 
+#### I2C <a name="i2c"></a>
 
 Use of Broadcom Serial Controller (BSC).
 
@@ -86,7 +86,7 @@ If you are getting CLKT timeout then it probably means that the slave is reading
 
 
 
-### Interrupts 
+### Interrupts <a name="interrupts"></a>
 We are going to use 2 from 4 different types of interrupts :
 -  Synchronous  Interrupts : Software interrupts called with the instruction `svc`.
 -  IRQ : External , low priority , interrupts.
@@ -95,7 +95,7 @@ We used interrupts for 2 main tasks :
 - Timer: IRQ in specific time interval 
 - System Call : Svc in EL0 state
 
-### System calls 
+### System calls <a name="system_calls"></a>
 We implement 7 system calls that helped us in the os : 
 - Write : Takes a argument and prints it in the screen.
 - Malloc : Allocate a new memory page(4Kb) for a user process.
@@ -105,7 +105,7 @@ We implement 7 system calls that helped us in the os :
 - Change_prior: Set the priority of a process.
 - Get_Prior: Get the priority of a process.
 
-### Tasks 
+### Tasks <a name="tasks"></a>
 ```
 ├── task_struct
 │   ├── cpu_context: all the registers of this process
@@ -114,7 +114,7 @@ We implement 7 system calls that helped us in the os :
 │   └── Preempt_Count: Check if this process is prerforming the scheduler
 │   └── Priority: High|Middle|Low
 ```
-#### Priority 
+#### Priority <a name="priority"></a>
 
 | Priority          | Scheduling Policy                             |
 | ----------------  | -------------------------------------------   |
@@ -125,7 +125,7 @@ We implement 7 system calls that helped us in the os :
 **Non-Preemptive**: A process can't be scheduled out in the middle of its execution.
 **Preemptive**: A process can be scheduled out in the middle of its execution. 
 
-#### Task Code
+#### Task Code<a name="task_code"></a>
 We have created a basic task so we can understand the demo. 
 ```
 int task(array,priority){
@@ -142,7 +142,7 @@ int task(array,priority){
     sys_exit_process();
 }
 ```
-### Scheduler 
+### Scheduler <a name="scheduler"></a>
 Every time a timer interrupt happen or a task has been completed, scheduler is called.
 
 Policy of scheduler:
@@ -151,7 +151,7 @@ Policy of scheduler:
 - If 2 or more tasks, of the same priority are waiting, perform fair sceduling between them, by rotating them. 
 - To avoid `Starvation` , if a task has waited for a long time it can jump to a higher priority. (Low->Middle,Middle->High).
   
-### Console 
+### Console <a name="console"></a>
 We created a basic console , so our kernel to be interactive: 
 ```
 root@pia3+# help
@@ -168,7 +168,7 @@ Available commands:
        I2C demo
 ```
 
-### Demo of kernel
+### Demo of kernel <a name="demo_of_kernel"></a>
 A screenshot of the kernel in action, after booting up:
 
 ```
@@ -191,19 +191,20 @@ Initializing LED...Done
 
 ```
 
+## References <a name="references"></a>
 
-### Manuals
+### Manuals <a name="manuals"></a>
 
 - [BROADCOM BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/README.md)
 - [BROADCOM BCM2711](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/README.md)
 - [AArch64 memory management](https://developer.arm.com/documentation/101811/latest)
 
-### Wikis
+### Wikis <a name="wikis"></a>
 
 - [OSDev.org - Raspberry Pi Bare Bones](https://wiki.osdev.org/ARM_RaspberryPi_Tutorial_C)
 - [ARM Developer](https://developer.arm.com/)
 
-### Repositories
+### Repositories <a name="repositories"></a>
 
 - [Linux Kernel - /arch/arm/](https://github.com/torvalds/linux/tree/master/arch/arm)
 - [Learning operating system development using Linux kernel and Raspberry Pi](https://github.com/s-matyukevich/raspberry-pi-os)
@@ -212,9 +213,9 @@ Initializing LED...Done
 - [Bare metal Raspberry Pi 3 tutorials](https://github.com/bztsrc/raspi3-tutorial)
 - [Writing a "bare metal" operating system for Raspberry Pi 4](https://github.com/isometimes/rpi4-osdev)
 
-### Book
+### Book <a name="book"></a>
 
 - [The little book about OS development](http://littleosbook.github.io/)
 
-## License
+## License <a name="licence"></a>
 This project is licensed under the MIT license. See [LICENSE](LICENSE) for details.
