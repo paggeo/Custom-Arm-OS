@@ -69,7 +69,44 @@ We implement 7 system calls that helped us in the os :
 - Cat : Prints cats in the screen.
 - Change_prior: Set the priority of a process.
 - Get_Prior: Get the priority of a process.
-  
+
+### Tasks 
+```
+├── task_struct
+│   ├── cpu_context: all the registers of this process
+│   ├── state: RUNNING|ZOMBIE
+│   └── Counter: How many times this process has not been scheduled
+│   └── Preempt_Count: Check if this process is prerforming the scheduler
+│   └── Priority: High|Middle|Low
+```
+#### Priority 
+
+| Priority          | Scheduling Policy                             |
+| ----------------  | -------------------------------------------   |
+| High              | Non-Preemptive                                |
+| Middle            | Preemptive                                    |
+| Low               | Preemptive                                    |
+
+**Non-Preemptive**: A process can't be scheduled out in the middle of its execution.
+**Preemptive**: A process can be scheduled out in the middle of its execution. 
+
+#### Task Code
+We have created a basic task so we can understand the demo. 
+```
+int task(array,priority){
+sys_change_priority(priority);
+count = 0;
+while(count<5){
+    for (i=0;i<len(array);i++){
+        sys_call_write(sys_call_get_priority());
+        sys_call_write(array[i]);
+        delay(_);
+        }
+    count++;
+    }
+sys_exit_process();
+}
+```
 ## Documentation
 There is proper documentation available for the project in two different formats:
 
