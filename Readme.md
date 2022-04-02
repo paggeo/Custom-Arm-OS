@@ -13,20 +13,42 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 
 ## Technology used 
 - Board : Rasberry Pi 3 A+
-  - Architecture : Armv8-A
-  - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
+    - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
+    - Architecture : Armv8-A
+    - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
+- Arduino Nano 
+- Cables 
+    - TTL to Usb
+    - Usb power cables
 
-## Table of Contents
+## Functionalities 
+
+### Peripherals 
+#### Uart 1
+
+We are using "miniUART" or "UART1" , because UART0(PL011) is connected to bluetooth and we want to keep this functionality open for development. 
+
+- First we have to set GPIO pins 14,15 to their function TXD1 and RXD1 respectively.
+
+- Then we disable flow control and interrupts just to make it easier to test. Also, baud rate is set to 115200 and the 8 bit ascii mode (extended) is selected . The above is all done via AUX registers for UART1 for which we have calculated their addresses according to the datasheet again.
+
+- Note: according to this https://forums.raspberrypi.com/viewtopic.php?f=63&t=138162 , to avoid clock skewing error in uart we set the clock frequency to 250 MHz in the config file of the boot partition in the SD card of the Pi 3. 
+
+- For testing, “screen” program was used along with a TTL cable. Terminal Command : sudo screen /dev/ttyUSB0 115200 . Baud Rate and setup is explained in code.
+
+#### I2C 
+
+Use of Broadcom Serial Controller (BSC).
+
+We are gonna use BSC1.
 
 
+Tip on debugging. Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
 
-## About
-This simple Operating System (kernel) is inspired and based on the Linux kernel, especially the ARM specific architecture parts. The features of the kernel are presented in detail in a later section. The main focus of this project, was to dive deep into core OS related concepts (such as the scheduler, drivers, handling processes/memory) and get to know the hardware and low level features of ARM embedded devices such as the Raspberry Pi.
 
-The other focus of this project, was to explore both the `Aarch32` and `Aarch64` ARM states developing the OS using the ARMv6/ARMv7-a and the ARMv8-a architecture respectively. The 32-bit version is the older and more widespreed architecture in embedded devices, but the 64-bit version is a more powerfull, modern and secure architecture with lots of differences from the old one.
+If you are getting CLKT timeout then it probably means that the slave is reading/writing slower than expected. This can be fixed by either increasing baudrate of slave in its serial IOs (that’s what we did), or if this is not possible increasing timeout window from master (raspberry). 
 
-- The `Aarch32` version was tested on the Raspberry Pi Zero W, but it should work with minor changes to the Raspberry Pi 2 and the original Pi.
-- Then `Aarch64` version was tested on the Raspberry Pi 4, but it should work with minor changes to the Raspberry Pi 3.
+
 
 ## Documentation
 There is proper documentation available for the project in two different formats:
