@@ -146,11 +146,11 @@ void console_help()
 	printk("    schedule:\n");
 	printk("        Demo for scheduling.\n");
 	printk("    cat_1:\n");
-	printk("        System call for cat1.\n");
+	printk("        System call for cat(1).\n");
 	printk("    cat_2:\n");
-	printk("        System call for cat2.\n");
+	printk("        System call for cat(2).\n");
 	printk("    i2c:\n");
-	printk("        System call for i2c.\n");
+	printk("        I2C demo.\n");
 }
 
 void console_i2c(){

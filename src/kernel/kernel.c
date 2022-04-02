@@ -37,7 +37,7 @@ void kernel_main(void)
 	
   printk("\t\tEnabling IRQ controllers...\n");
 	enable_interrupt_controller();
-	printk("\t\tIRQ controllers have been enabled !n");
+	printk("\t\tIRQ controllers have been enabled \n");
 	
   printk("\t\tEnabling IRQs...\n");
   enable_irq();
