@@ -11,7 +11,7 @@
 
 
 Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
-
+For a demo of the whole project, please check [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-) !
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
 ## Table of contents
@@ -84,6 +84,10 @@ To understand the scheduler demo :
 ## Functionalities <a name="functionalities"></a>
 
 ### Peripherals <a name="peripherals"></a>
+
+In this module every peripheral is using Memory Mapped I/O . Every ARM memory address is mapped to a bus memory address. For clarity every address used is physical.
+
+Peripherals start at address 0x3F000000.
 
 #### Uart 1<a name="uart_1"></a>
 
