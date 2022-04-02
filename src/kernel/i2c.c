@@ -107,22 +107,10 @@ while(!( get32(Status_reg) & S_DONE ) ) {
         put32(FIFO_reg,*buffer++); 
         bytes_written++;
 
-       // printk("yeah baby boy\r\n");
     }
 
-   // THis point IIS indeed reached
-
     }
-/*
-// *important* done flag might be set before FIFO has been "sent" completely 
-    while(bytes_written < size && ( get32(Status_reg) & S_TXD) ) {
-        put32(FIFO_reg,*buffer++); 
-        bytes_written++;
-    }
-printk("yeah baby\r\n");
 
-   */
-  //  printk("yeah baby girl\r\n");
    uint32_t status = get32(Status_reg) ;
 
     put32(Status_reg,S_DONE);
