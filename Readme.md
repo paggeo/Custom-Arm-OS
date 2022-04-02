@@ -4,7 +4,7 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS?color=brightgreen&logo=Open%20Source%20Initiative) 
 
-![Board](https://img.shields.io/badge/board-Raspberry%20Pi%20Zero%20W-red?style=flat&logo=Raspberry%20Pi) ![Board](https://img.shields.io/badge/board-Raspberry%20Pi%204-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2835-orange?style=flat&logo=Broadcom) ![chip](https://img.shields.io/badge/chip-BCM2711-orange?style=flat&logo=Broadcom) ![arch](https://img.shields.io/badge/arch-armv6-lightblue?style=flat) ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
+![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom)  ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
 
 
 Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
@@ -28,14 +28,13 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
       - [Task Code<a name="task_code"></a>](#task-code)
     - [Scheduler <a name="scheduler"></a>](#scheduler-)
     - [Console <a name="console"></a>](#console-)
-    - [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-)
+  - [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-)
   - [References <a name="references"></a>](#references-)
     - [Manuals <a name="manuals"></a>](#manuals-)
     - [Wikis <a name="wikis"></a>](#wikis-)
     - [Repositories <a name="repositories"></a>](#repositories-)
     - [Book <a name="book"></a>](#book-)
   - [License <a name="licence"></a>](#license-)
-  -[License](#license) 
 
 ## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
@@ -191,7 +190,7 @@ Available commands:
        I2C demo
 ```
 
-### Demo of kernel <a name="demo_of_kernel"></a>
+## Demo of kernel <a name="demo_of_kernel"></a>
 A screenshot of the kernel in action, after booting up:
 
 ```
