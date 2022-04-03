@@ -18,6 +18,10 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 - [Custom operating system for Armv8-A](#custom-operating-system-for-armv8-a)
   - [Table of content](#table-of-content)
   - [How to start <a name="introduction"></a>](#how-to-start-)
+      - [Download](#download)
+      - [Extract](#extract)
+      - [Add toolchain to Path](#add-toolchain-to-path)
+      - [Download screen](#download-screen)
   - [Technology used <a name="technology_used"></a>](#technology-used-)
   - [Demo <a name="demo"></a>](#demo-)
   - [Functionalities <a name="functionalities"></a>](#functionalities-)
@@ -41,8 +45,28 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
 
 ## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
-    - For all compilers : [Here](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
-- Install screen program.
+  - For all compilers : [Here](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads)
+#### Download
+```
+wget https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz 
+```
+#### Extract
+```
+tar -xvf gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz  
+```
+#### Add toolchain to Path 
+```
+echo 'export PATH="$HOME/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf/bin:$PATH"' >> $HOME/.zshrc
+```
+```
+source ~/.zshrc
+```
+- Install screen program
+
+#### Download screen
+```
+sudo apt-get install screen
+```
 - Set up Sd card with 2 partitions. We suggest you do use that by installing Rasberry Os : [here](https://www.raspberrypi.com/software/)
 - Replace confix.txt in /boot partition 
 - Change ARMGMU flag in Makefile according to your crosscompiler. 
@@ -52,6 +76,12 @@ make
 - Replace the kernel8.img in /boot partition with the one produced by make.
 - Connect rasberry pi with TTL cable to one of your usb with connecting the pins in this [order](https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-5-using-a-console-cable.pdf) . 
 - Open screen with `sudo screen /dev/ttyUSB0 115200`
+  May need permissions: 
+  - Make sure your user is in the `dialout` group : 
+  
+```
+sudo usermod -a -G dialout <username>
+```
 - Power Rasberry pi 
 
 ## Technology used <a name="technology_used"></a>
