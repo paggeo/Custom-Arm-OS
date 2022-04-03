@@ -5,18 +5,18 @@
   <img width="200" height="200" src="docs/rasberrypi.jpg">
 </p>
 
-![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS?color=brightgreen&logo=Open%20Source%20Initiative) 
+![GitHub top language](https://img.shields.io/github/languages/top/GeorgePag4028/Custom-Arm-OS?color=blueviolet) ![GitHub repo size](https://img.shields.io/github/repo-size/thanoskoutr/armOS?color=informational&logo=GitHub) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/GeorgePag4028/Custom-Arm-OS?color=blue&logo=GitHub) ![GitHub](https://img.shields.io/github/license/GeorgePag4028/Custom-Arm-OS)
 
 ![Board](https://img.shields.io/badge/board-Raspberry%20Pi%203%20A+-red?style=flat&logo=Raspberry%20Pi&logoColor=white) ![chip](https://img.shields.io/badge/chip-BCM2837-orange?style=flat&logo=Broadcom) ![arch](https://img.shields.io/badge/arch-armv8--a-lightblue?style=flat)
 
 
 Simple ARM Operating System for the Raspberry Pi, supporting Aarch64 architecture. The board supported is Raspberry Pi 3 A+.
-
+For a demo of the whole project, please check  [Demo <a name="demo"></a>](#demo-) !
 This project was made for the Embedded Systems course at NTUA 2021-2022.
 
-## Table of content
+## Table of contents
 - [Custom operating system for Armv8-A](#custom-operating-system-for-armv8-a)
-  - [Table of content](#table-of-content)
+  - [Table of contents](#table-of-contents)
   - [How to start <a name="introduction"></a>](#how-to-start-)
       - [Download](#download)
       - [Extract](#extract)
@@ -37,11 +37,11 @@ This project was made for the Embedded Systems course at NTUA 2021-2022.
     - [Console <a name="console"></a>](#console-)
   - [Demo of kernel <a name="demo_of_kernel"></a>](#demo-of-kernel-)
   - [References <a name="references"></a>](#references-)
-    - [Manuals <a name="manuals"></a>](#manuals-)
     - [Wikis <a name="wikis"></a>](#wikis-)
     - [Repositories <a name="repositories"></a>](#repositories-)
     - [Book <a name="book"></a>](#book-)
   - [License <a name="licence"></a>](#license-)
+  - [Collaborators <a name="Collaborators"></a>](#collaborators-)
 
 ## How to start <a name="introduction"></a>
 - [Cross-Compiler-for-Arm](https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf.tar.xz)
@@ -67,7 +67,7 @@ source ~/.zshrc
 ```
 sudo apt-get install screen
 ```
-- Set up Sd card with 2 partitions. We suggest you do use that by installing Rasberry Os : [here](https://www.raspberrypi.com/software/)
+- Set up Sd card with 2 partitions. We suggest you do that by installing Rasberry Os : [here](https://www.raspberrypi.com/software/)
 - Replace confix.txt in /boot partition 
 - Change ARMGMU flag in Makefile according to your crosscompiler. 
 ```
@@ -89,7 +89,7 @@ sudo usermod -a -G dialout <username>
     - Peripherals module : [BCM2837-Broadcom](https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf)
     - Architecture : Armv8-A
     - Cpu : [Contex-A53](https://developer.arm.com/Processors/Cortex-A53#Technical-Specifications)
-- Arduino Nano 
+- Arduino Nano with [arduino IDE](https://www.arduino.cc/en/software)
 - Cables 
     - TTL to Usb
     - Usb power cables
@@ -116,6 +116,10 @@ To understand the scheduler demo :
 
 ### Peripherals <a name="peripherals"></a>
 
+In this module every peripheral is using Memory Mapped I/O . Every ARM memory address is mapped to a bus memory address. For clarity every address used is physical.
+
+Peripherals start at address 0x3F000000.
+
 #### Uart 1<a name="uart_1"></a>
 
 We are using "miniUART" or "UART1" , because UART0(PL011) is connected to bluetooth and we want to keep this functionality open for development. 
@@ -134,11 +138,30 @@ Use of Broadcom Serial Controller (BSC).
 
 We are gonna use BSC1.
 
+I2C Instructions:
+Same as with UART, we have set up.
+1. Proper functions to pins 2,3.
+2. Disabled Pull Up/Down resistors
+3. Know the exact amount of bytes to send
+4. Know the slave address 
+5. Set I2C speed at a standard 100khz.
 
-Tip on debugging. Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
+
+For the pins connections you need 3 cables to connect:
+
+| Raspberry | Nano |
+| --------- | ---- |
+| GPIO2 --> | A4   |
+| GPIO3 --> | A5   |
+| GND   --> | GND  |
 
 
-If you are getting CLKT timeout then it probably means that the slave is reading/writing slower than expected. This can be fixed by either increasing baudrate of slave in its serial IOs (that’s what we did), or if this is not possible increasing timeout window from master (raspberry). 
+Tip on debugging. 
+
+- Check error. We were getting the “ERR” return value from the status register. This has to do with no ACK of slave address. One common cause for this issue is incorrect voltage in GPIO pins.So, we took our old trusty multimeter and saw that the voltage on the pins was indeed incorrect (lower than voltage “HIGH”). Thus, it was mandatory to  recheck hardware gpio settings in the kernel. It turned out that we had set some bits wrong. :D
+
+
+- If you are getting CLKT timeout then it probably means that the slave is reading/writing slower than expected. This can be fixed by either increasing baudrate of slave in its serial IOs (that’s what we did), or if this is not possible increasing timeout window from master (raspberry). 
 
 
 
@@ -255,12 +278,6 @@ initialization...
 
 ## References <a name="references"></a>
 
-### Manuals <a name="manuals"></a>
-
-- [BROADCOM BCM2835](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2835/README.md)
-- [BROADCOM BCM2711](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2711/README.md)
-- [AArch64 memory management](https://developer.arm.com/documentation/101811/latest)
-
 ### Wikis <a name="wikis"></a>
 
 - [OSDev.org - Raspberry Pi Bare Bones](https://wiki.osdev.org/ARM_RaspberryPi_Tutorial_C)
@@ -270,6 +287,7 @@ initialization...
 
 - [Linux Kernel - /arch/arm/](https://github.com/torvalds/linux/tree/master/arch/arm)
 - [Learning operating system development using Linux kernel and Raspberry Pi](https://github.com/s-matyukevich/raspberry-pi-os)
+- [RPI OS dev: Low Level Devel](https://github.com/rockytriton/LLD/tree/main/rpi_bm)
 - [Building an Operating System for the Raspberry Pi](https://jsandler18.github.io/)
 - [Raspberry Pi ARM based bare metal examples](https://github.com/dwelch67/raspberrypi)
 - [Bare metal Raspberry Pi 3 tutorials](https://github.com/bztsrc/raspi3-tutorial)
@@ -281,3 +299,9 @@ initialization...
 
 ## License <a name="licence"></a>
 This project is licensed under the MIT license. See [LICENSE](LICENSE) for details.
+
+## Collaborators <a name="Collaborators"></a>
+- George Pagonis
+- Dimitrios Bouras
+- Dimitrios Lampros
+* Supervisor: Manolis Katsaragakis
