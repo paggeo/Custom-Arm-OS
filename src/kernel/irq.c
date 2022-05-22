@@ -31,7 +31,7 @@ const char *entry_error_messages[] = {
 
 void enable_interrupt_controller()
 {
-	put32(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1);
+	put32(IRQ0_SET_EN_0, SYSTEM_TIMER_IRQ_1);
 }
 
 void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
@@ -41,7 +41,7 @@ void show_invalid_entry_message(int type, unsigned long esr, unsigned long addre
 
 void handle_irq(void)
 {
-	unsigned int irq = get32(IRQ_PENDING_1);
+	unsigned int irq = get32(IRQ0_PENDING_1);
 	switch (irq) {
 		case (SYSTEM_TIMER_IRQ_1):
 			handle_timer_irq();

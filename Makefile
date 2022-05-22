@@ -12,8 +12,13 @@ IMG_NAME = kernel8
 
 
 # Set Raspi Model, if not set
-RASPI_MODEL = 3
+RASPI_MODEL = 4
 
+ifeq ($(RASPI_MODEL), 3)
+	MODEL = MODEL_3
+else ifeq ($(RASPI_MODEL), 4)
+	MODEL = MODEL_4
+endif
 # Set flags and variables dependent on the Raspi Model
 AARCH = AARCH_64
 MODEL = MODEL_3
@@ -80,4 +85,3 @@ build: $(OBJ_FILES)
 # Clean rules
 clean:
 	rm -rf $(BUILD_DIR) *.img *.elf *.bin *.gz *.zip $(STUB_DIR)/$(BUILD_DIR)
-
