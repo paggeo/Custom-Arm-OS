@@ -33,8 +33,18 @@ master:
 	eret				
 
 el1_entry:
-	adr	x0, bss_begin
-	adr	x1, bss_end
+	//adr	x0, bss_begin
+	//adr	x1, bss_end
+ 
+	/*It is caused by adr instruction which permits the calculation of any byte
+	address within +- 1MB of the current PC.
+	Because U-Boot is bigger then 1MB calculation is failing.*/
+
+	adrp    x0, bss_begin     /* x2 <- Runtime &bss_begin */
+  add     x0, x0, #:lo12:bss_begin
+  adrp    x1, bss_end       /* x3 <- Runtime &bss_end */
+  add     x1, x1, #:lo12:bss_end
+
 	sub	x1, x1, x0
 	bl 	memzero
 
