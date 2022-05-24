@@ -12,11 +12,16 @@ IMG_NAME = kernel8
 
 
 # Set Raspi Model, if not set
-RASPI_MODEL = 3
+RASPI_MODEL = 4
+
+ifeq ($(RASPI_MODEL), 3)
+  MODEL = MODEL_3
+else ifeq ($(RASPI_MODEL), 4)
+  MODEL = MODEL_4
+endif
 
 # Set flags and variables dependent on the Raspi Model
 AARCH = AARCH_64
-MODEL = MODEL_3
 ARCH_DIR = arch/armv8-a
 SFLAGS += -mgeneral-regs-only
 CPU = cortex-a53
