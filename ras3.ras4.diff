@@ -1,0 +1,113 @@
+diff --git a/Makefile b/Makefile
+index debf332..713145e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -12,16 +12,11 @@ IMG_NAME = kernel8
+ 
+ 
+ # Set Raspi Model, if not set
+-RASPI_MODEL = 4
+-
+-ifeq ($(RASPI_MODEL), 3)
+-	MODEL = MODEL_3
+-else ifeq ($(RASPI_MODEL), 4)
+-	MODEL = MODEL_4
+-endif
++RASPI_MODEL = 3
+ 
+ # Set flags and variables dependent on the Raspi Model
+ AARCH = AARCH_64
++MODEL = MODEL_3
+ ARCH_DIR = arch/armv8-a
+ SFLAGS += -mgeneral-regs-only
+ CPU = cortex-a53
+diff --git a/arch/armv8-a/boot.S b/arch/armv8-a/boot.S
+index 1dd35dc..6db1006 100644
+--- a/arch/armv8-a/boot.S
++++ b/arch/armv8-a/boot.S
+@@ -33,18 +33,8 @@ master:
+ 	eret				
+ 
+ el1_entry:
+-	//adr	x0, bss_begin
+-	//adr	x1, bss_end
+- 
+-	/*It is caused by adr instruction which permits the calculation of any byte
+-	address within +- 1MB of the current PC.
+-	Because U-Boot is bigger then 1MB calculation is failing.*/
+-
+-	adrp    x0, bss_begin     /* x2 <- Runtime &bss_begin */
+-  add     x0, x0, #:lo12:bss_begin
+-  adrp    x1, bss_end       /* x3 <- Runtime &bss_end */
+-  add     x1, x1, #:lo12:bss_end
+-
++	adr	x0, bss_begin
++	adr	x1, bss_end
+ 	sub	x1, x1, x0
+ 	bl 	memzero
+ 
+diff --git a/include/peripherals/base.h b/include/peripherals/base.h
+index ebade3a..63f9c03 100644
+--- a/include/peripherals/base.h
++++ b/include/peripherals/base.h
+@@ -1,6 +1,6 @@
+ #ifndef	_P_BASE_H
+ #define	_P_BASE_H
+ 
++#define PBASE 0x3F000000
+ 
+-#define PBASE 0xFE000000
+ #endif  /*_P_BASE_H */
+diff --git a/include/peripherals/irq.h b/include/peripherals/irq.h
+index b1f8273..b883cd4 100644
+--- a/include/peripherals/irq.h
++++ b/include/peripherals/irq.h
+@@ -3,16 +3,16 @@
+ 
+ #include "peripherals/base.h"
+ 
+-#define IRQ_BASE  (PBASE + 0xB000),
+-#define IRQ0_PENDING_0      (IRQ_BASE + 0x200)
+-#define IRQ0_PENDING_1      (IRQ_BASE + 0x204)
+-//#define IRQ0_PENDING_2      (IRQ_BASE + 0x208)
+-#define IRQ0_SET_EN_0       (IRQ_BASE + 0x210)
+-#define IRQ0_SET_EN_1       (IRQ_BASE + 0x214)
+-//#define IRQ0_SET_EN_2       (IRQ_BASE + 0x218)
+-#define IRQ0_CLR_EN_0       (IRQ_BASE + 0x220)
+-//#define IRQ0_CLR_EN_1       (IRQ_BASE + 0x224)
+-//#define IRQ0_CLR_EN_2       (IRQ_BASE + 0x228)
++#define IRQ_BASIC_PENDING	(PBASE+0x0000B200)
++#define IRQ_PENDING_1		(PBASE+0x0000B204)
++#define IRQ_PENDING_2		(PBASE+0x0000B208)
++#define FIQ_CONTROL		(PBASE+0x0000B20C)
++#define ENABLE_IRQS_1		(PBASE+0x0000B210)
++#define ENABLE_IRQS_2		(PBASE+0x0000B214)
++#define ENABLE_BASIC_IRQS	(PBASE+0x0000B218)
++#define DISABLE_IRQS_1		(PBASE+0x0000B21C)
++#define DISABLE_IRQS_2		(PBASE+0x0000B220)
++#define DISABLE_BASIC_IRQS	(PBASE+0x0000B224)
+ 
+ #define SYSTEM_TIMER_IRQ_0	(1 << 0)
+ #define SYSTEM_TIMER_IRQ_1	(1 << 1)
+diff --git a/src/kernel/irq.c b/src/kernel/irq.c
+index aba4661..e359914 100644
+--- a/src/kernel/irq.c
++++ b/src/kernel/irq.c
+@@ -31,7 +31,7 @@ const char *entry_error_messages[] = {
+ 
+ void enable_interrupt_controller()
+ {
+-	put32(IRQ0_SET_EN_1, SYSTEM_TIMER_IRQ_1);
++	put32(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1);
+ }
+ 
+ void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
+@@ -41,7 +41,7 @@ void show_invalid_entry_message(int type, unsigned long esr, unsigned long addre
+ 
+ void handle_irq(void)
+ {
+-	unsigned int irq = get32(IRQ0_PENDING_1);
++	unsigned int irq = get32(IRQ_PENDING_1);
+ 	switch (irq) {
+ 		case (SYSTEM_TIMER_IRQ_1):
+ 			handle_timer_irq();
