@@ -31,7 +31,11 @@ const char *entry_error_messages[] = {
 
 void enable_interrupt_controller()
 {
+//#if (MODEL_3 == MODEL)
+	//put32(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1);
+//#elif (MODEL_4 == MODEL)
 	put32(IRQ0_SET_EN_1, SYSTEM_TIMER_IRQ_1);
+//#endif
 }
 
 void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
@@ -41,7 +45,11 @@ void show_invalid_entry_message(int type, unsigned long esr, unsigned long addre
 
 void handle_irq(void)
 {
+//#if (MODEL_3 == MODEL)
+	//unsigned int irq = get32(IRQ_PENDING_1);
+//#elif (MODEL_4 == MODEL)
 	unsigned int irq = get32(IRQ0_PENDING_1);
+//#endif
 	switch (irq) {
 		case (SYSTEM_TIMER_IRQ_1):
 			handle_timer_irq();

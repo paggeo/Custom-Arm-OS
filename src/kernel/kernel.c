@@ -25,39 +25,27 @@ void kernel_main(void)
 	printk("\n initialization...\n\n");
 
   printk("\n\tBoard: Raspberry Pi 3 A+ \n");
-  //printk("\tArch: aarch64\n");
 
-  printk("\t\tInterrupts Initialization \n");
+  printk("Initialization \n");
 	irq_vector_init();
-	printk("\t\tInterrupts have been initialized successfully Done\n");
+	printk("Interrupts have been initialized successfully Done\n");
 	
-  /* printk("Enabling IRQs...\n"); */
-	/* timer_init(); */
-	/* printk("Done\n"); */
 	
-  printk("\t\tEnabling IRQ controllers...\n");
+  printk("Enabling IRQ controllers...\n");
 	enable_interrupt_controller();
-	printk("\t\tIRQ controllers have been enabled \n");
+	printk("IRQ controllers have been enabled \n");
 	
-  printk("\t\tEnabling IRQs...\n");
+  printk("Enabling IRQs...\n");
   enable_irq();
-	printk("\t\tIRQs have been enabled !\n");
+	printk("IRQs have been enabled !\n");
   
-  printk("\t\tInitializing I2C...\n");
+  printk("Initializing I2C...\n");
   i2c_init();
-  printk("\t\tI2C has been enabled !\n");
+  printk("I2C has been enabled !\n");
 
 
-	/* int res = copy_process(PF_KTHREAD, (unsigned long)&kernel_process, 0, 0); */
-	/* if (res < 0) { */
-	/* 	printk("error while starting kernel process"); */
-	/* 	return; */
-	/* } */
   char device[DEVICE_LENGTH];
   strcpy(device, "pi3a+");
 
   console(device);
-	/* while (1){ */
-	/* 	schedule(); */
-	/* } */	
 }
